@@ -1,0 +1,6 @@
+env
+shooter
+menu/__pycache__
+menu/game.py
+menu/main.py
+menu/draft.py

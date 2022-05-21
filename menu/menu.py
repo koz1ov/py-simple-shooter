@@ -32,7 +32,8 @@ class BaseMenu(BaseModel):
     
 BaseMenu.update_forward_refs()
 
-
+def _(arg):
+    return arg
 
 
 
@@ -138,6 +139,7 @@ class FreeMenu():
             # self.run_display = False
 
     def draw_text(self, text, size, x, y):
+        text = _(text)
         font = pygame.font.Font(self.font_name, size)
         text_surface = font.render(text, True, self.BLACK)
         

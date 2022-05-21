@@ -1,5 +1,7 @@
 import config as cfg
 import pygame as pg
+import player
+
 
 class Rendering:
 
@@ -7,14 +9,14 @@ class Rendering:
         self.sc = pg.display.set_mode((cfg.WIDTH, cfg.HEIGHT))
         self._load_textures()
 
-    def render(self, player):
-        self.sc.fill((255,0,0))
+    def render(self, player: player.Player):
+        self.sc.fill((255, 0, 0))
         self._render_walls(player.pos, player.dir, player.plane)
         self._draw_minimap(player.pos)
         pg.display.flip()
         # TODO: render floor and ceiling
 
-    def _draw_minimap(self, player_pos):
+    def _draw_minimap(self, player_pos: pg.math.Vector2):
 
         MINIMAP_WIDTH, MINIMAP_HEIGHT = cfg.WIDTH // 5, cfg.HEIGHT // 5
         width = MINIMAP_WIDTH / len(cfg.MAP[0])
@@ -24,8 +26,10 @@ class Rendering:
         for row in range(len(cfg.MAP)):
             for col in range(len(cfg.MAP[0])):
                 if cfg.MAP[row][col]:
-                    pg.draw.rect(self.sc, (0, 0, 0), (col * width, cfg.HEIGHT - MINIMAP_HEIGHT + row * height, width, height))
-                    pg.draw.rect(self.sc, (0, 255, 0), (player_pos.x * width, cfg.HEIGHT - MINIMAP_HEIGHT + player_pos.y * height, width, height))
+                    pg.draw.rect(self.sc, (0, 0, 0),
+                                 (col * width, cfg.HEIGHT - MINIMAP_HEIGHT + row * height, width, height))
+                    pg.draw.rect(self.sc, (0, 255, 0), (
+                        player_pos.x * width, cfg.HEIGHT - MINIMAP_HEIGHT + player_pos.y * height, width, height))
 
     def _load_textures(self):
         self.textures = {
@@ -41,7 +45,7 @@ class Rendering:
         self.tex_width = self.textures[1].get_width()
         self.tex_height = self.textures[1].get_height()
 
-    def _render_walls(self, player_pos, player_dir, plane_vec):
+    def _render_walls(self, player_pos: pg.math.Vector2, player_dir: pg.math.Vector2, plane_vec: pg.math.Vector2):
         for x in range(cfg.WIDTH):
             camera_x = 2 * x / cfg.WIDTH - 1
             ray = player_dir + plane_vec * camera_x

@@ -201,12 +201,14 @@ class FreeMenu():
         self.reset_keys()
     
     def save_settings(self):
-        f = open("menu/settings.json", "w")
-        f.write(self.menu_json.json())
-        f.close()
+        file = open("menu/settings.json", "w")
+        file.write(self.menu_json.json())
+        file.close()
 
 try:
-    setting_string = open("menu/settings.json", "r").read()
+    file = open("menu/settings.json", "r")
+    setting_string = file.read()
+    file.close()
     menu_object = BaseMenu.parse_raw(setting_string)
     pygame.init()
     menu = FreeMenu(menu_object, 480, 270)

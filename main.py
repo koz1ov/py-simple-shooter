@@ -1,8 +1,8 @@
-import config as cfg
 import pygame as pg
+
+import interaction
 import player
 import rendering
-import interaction
 
 pg.init()
 clock = pg.time.Clock()

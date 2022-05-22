@@ -12,25 +12,22 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = 480, 270
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
-        self.font_name = "menu/COMIC.TTF"
+        self.font_name = "menu/COMIC2.TTF"
         self.BLACK, self.WHITE, self.GRAY = (0,0,0), (255,255,255), (229, 229, 229)
         self.main_menu = MainMenu(self)
         self.options = OptionsMenu(self)
-        self.options.current_volume = self.settings.volume
-        self.options.music_switcher_current = self.options.music_switcher_states.index(self.settings.music)
-        self.options.language_current = self.options.language_states.index(self.settings.language)
+        self.options.options_values["Volume"][0] = self.settings.data.volume
+        self.options.options_values["Music"][0] = self.settings.data.music
+        self.options.options_values["Language"][0] = self.settings.data.language
         self.credits = CreditsMenu(self)
         self.current_menu = self.main_menu
 
 
     def save_game(self):
-        
-        self.settings.volume = self.options.current_volume
-        self.settings.music = self.options.music_switcher_states[self.options.music_switcher_current]
-        self.settings.language = self.options.language_states[self.options.language_current]
-        file = open("menu/settings.json", "w")
-        file.write(self.settings.json())
-        file.close()
+        self.settings.data.volume = self.options.options_values["Volume"][0]
+        self.settings.data.music = self.options.options_values["Music"][0]
+        self.settings.data.language = self.options.options_values["Language"][0]
+        self.settings.save()
 
     def game_loop(self):
         while self.running:
@@ -39,9 +36,11 @@ class Game():
                 self.save_game()
             except ValidationError as e:
                     print(e.json())
+
             while self.playing:
                 self.check_events()
                 if self.START_KEY:
+                    # тут выход обратно в меню
                     self.playing = False
                 self.display.fill(self.GRAY)
                 self.draw_text("Thank for playing", 20, self.DISPLAY_W/2, self.DISPLAY_H/2)

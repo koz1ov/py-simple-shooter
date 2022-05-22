@@ -1,5 +1,6 @@
 import pygame
 import gettext
+import locale
 class Menu():
     def __init__(self, game):
         self.game = game
@@ -16,8 +17,12 @@ class Menu():
         pygame.display.update()
         self.game.reset_keys()
 
-translation = gettext.translation("py-simple-shooter", "po")
-_ = translation.gettext
+en = gettext.translation("py-simple-shooter", "po", languages=["en"])
+ru = gettext.translation("py-simple-shooter", "po", languages=["ru"])
+en.install()
+ru.install()
+_ = ru.gettext
+
 
 class MainMenu(Menu):
     def __init__(self, game):
@@ -87,7 +92,7 @@ class OptionsMenu(Menu):
         self.max_volume = 10
 
         self.musicx, self.musicy = self.mid_w, self.mid_h + 40
-        self.music_switcher_states = [_("Yes"), _("No"), _("Random")]
+        self.music_switcher_states = ["Yes", "No", "Random"]
         self.music_switcher_current = 0
         self.len_music_states = len(self.music_switcher_states)
 
@@ -106,8 +111,8 @@ class OptionsMenu(Menu):
             self.game.display.fill(self.game.GRAY)
             self.game.draw_text(_("Options"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
             self.game.draw_text(_("Volume") + ":" + "X" * self.current_volume, 15, self.volx, self.voly)
-            self.game.draw_text(_("Music")  + ":" + self.music_switcher_states[self.music_switcher_current], 15, self.musicx, self.musicy)
-            self.game.draw_text(_("Language")  + ":" + self.language_states[self.language_current], 15, self.langx, self.langy)
+            self.game.draw_text(_("Music")  + ":" + _(self.music_switcher_states[self.music_switcher_current]), 15, self.musicx, self.musicy)
+            self.game.draw_text(_("Language")  + ":" + _(self.language_states[self.language_current]), 15, self.langx, self.langy)
             self.draw_cursor()
             self.blit_screen()
 
@@ -151,7 +156,15 @@ class OptionsMenu(Menu):
                     self.language_current = len(self.language_states) - 1
                 else:
                     self.language_current -= 1
-
+                # if self.language_states[self.language_current] == "ru":
+                #     LANG = "ru"
+                #     # ru.install()
+                #     # _ = ru
+                #     # _ = translation
+                # elif self.language_states[self.language_current] == "en":
+                #     LANG = "en"
+                #     # en.install()
+                #     # _ = en
         elif self.game.RIGHT_KEY:
             if self.state == "Volume":
                 if self.current_volume + 1 > self.max_volume:
@@ -169,6 +182,10 @@ class OptionsMenu(Menu):
                     self.language_current = 0
                 else:
                     self.language_current += 1
+                # if self.language_states[self.language_current] == "ru":
+                #     _ = translation_ru
+                # elif self.language_states[self.language_current] == "en":
+                #     _ = translation_en
 
 class CreditsMenu(Menu):
     def __init__(self, game):

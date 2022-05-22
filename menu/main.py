@@ -1,7 +1,7 @@
 from game import Game
 from pydantic import ValidationError
 from settings import Settings
-
+import locale
 
 file = open("menu/settings.json", "r")
 setting_string = file.read()

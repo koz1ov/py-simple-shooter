@@ -1,3 +1,4 @@
+"""The module that initializes game state and starts the main game loop."""
 import pygame as pg
 
 import interaction

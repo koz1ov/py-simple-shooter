@@ -1,16 +1,19 @@
+"""Define an Interaction class for event handling."""
 import config as cfg
 import pygame as pg
 import player
 
 
 class Interaction:
+    """Class that processes the events and changes the world state."""
 
     def __init__(self):
-        self.clock = pg.time.Clock()
+        """Initialise the clock object for time tracking."""
+        self._clock = pg.time.Clock()
 
     def process_events(self, player: player.Player) -> None:
-
-        elapsed = self.clock.tick(cfg.MAX_FPS)
+        """Process keyboard events and change the world state."""
+        elapsed = self._clock.tick(cfg.MAX_FPS)
 
         keys = pg.key.get_pressed()
         if keys[pg.K_UP]:

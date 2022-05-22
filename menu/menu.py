@@ -1,4 +1,5 @@
 import pygame
+import gettext
 class Menu():
     def __init__(self, game):
         self.game = game
@@ -15,7 +16,8 @@ class Menu():
         pygame.display.update()
         self.game.reset_keys()
 
-
+translation = gettext.translation("py-simple-shooter", "po")
+_ = translation.gettext
 
 class MainMenu(Menu):
     def __init__(self, game):
@@ -32,10 +34,10 @@ class MainMenu(Menu):
             self.game.check_events()
             self.check_input()
             self.game.display.fill(self.game.GRAY)
-            self.game.draw_text(("Main Menu"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
-            self.game.draw_text(("Start Game"), 20, self.startx, self.starty)
-            self.game.draw_text(("Options"), 20, self.optionsx, self.optionsy)
-            self.game.draw_text(("Credits"), 20, self.creditsx, self.creditsy)
+            self.game.draw_text(_("Main Menu"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
+            self.game.draw_text(_("Start Game"), 20, self.startx, self.starty)
+            self.game.draw_text(_("Options"), 20, self.optionsx, self.optionsy)
+            self.game.draw_text(_("Credits"), 20, self.creditsx, self.creditsy)
             self.draw_cursor()
             self.blit_screen()
 
@@ -85,7 +87,7 @@ class OptionsMenu(Menu):
         self.max_volume = 10
 
         self.musicx, self.musicy = self.mid_w, self.mid_h + 40
-        self.music_switcher_states = [("Yes"), ("No"), ("Random")]
+        self.music_switcher_states = [_("Yes"), _("No"), _("Random")]
         self.music_switcher_current = 0
         self.len_music_states = len(self.music_switcher_states)
 
@@ -102,10 +104,10 @@ class OptionsMenu(Menu):
             self.game.check_events()
             self.check_input()
             self.game.display.fill(self.game.GRAY)
-            self.game.draw_text(("Options"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
-            self.game.draw_text(("Volume") + ":" + "X" * self.current_volume, 15, self.volx, self.voly)
-            self.game.draw_text(("Music")  + ":" + self.music_switcher_states[self.music_switcher_current], 15, self.musicx, self.musicy)
-            self.game.draw_text(("Language")  + ":" + self.language_states[self.language_current], 15, self.langx, self.langy)
+            self.game.draw_text(_("Options"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 30)
+            self.game.draw_text(_("Volume") + ":" + "X" * self.current_volume, 15, self.volx, self.voly)
+            self.game.draw_text(_("Music")  + ":" + self.music_switcher_states[self.music_switcher_current], 15, self.musicx, self.musicy)
+            self.game.draw_text(_("Language")  + ":" + self.language_states[self.language_current], 15, self.langx, self.langy)
             self.draw_cursor()
             self.blit_screen()
 
@@ -180,8 +182,8 @@ class CreditsMenu(Menu):
                 self.game.current_menu = self.game.main_menu
                 self.run_display = False
             self.game.display.fill(self.game.GRAY)
-            self.game.draw_text(("Credits"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
-            self.game.draw_text(("Sasha and Petya"), 15, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
+            self.game.draw_text(_("Credits"), 20, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 - 20)
+            self.game.draw_text(_("Sasha and Petya"), 15, self.game.DISPLAY_W / 2, self.game.DISPLAY_H / 2 + 10)
             self.blit_screen()
 
     

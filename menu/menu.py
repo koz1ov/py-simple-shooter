@@ -1,6 +1,10 @@
 import pygame
 import gettext
-import locale
+en = gettext.translation("py-simple-shooter", "po", languages=["en"])
+ru = gettext.translation("py-simple-shooter", "po", languages=["ru"])
+ru.install()
+en.install()
+_ = ru.gettext
 class Menu():
     def __init__(self, game):
         self.game = game
@@ -9,7 +13,11 @@ class Menu():
         self.offset = -100
         self.cursor_height = 15
         self.cursor_rect = pygame.Rect(0, 0, self.cursor_height, self.cursor_height)
-        
+        global _
+        if self.game.settings.data.language == 0:
+            _ = ru.gettext
+        else:
+            _ = en.gettext
     
     def draw_cursor(self):
         self.game.draw_text('*', self.cursor_height, self.cursor_rect.x, self.cursor_rect.y)
@@ -18,13 +26,6 @@ class Menu():
         self.game.window.blit(self.game.display, (0, 0))
         pygame.display.update()
         self.game.reset_keys()
-
-en = gettext.translation("py-simple-shooter", "po", languages=["en"])
-ru = gettext.translation("py-simple-shooter", "po", languages=["ru"])
-en.install()
-ru.install()
-_ = en.gettext
-
 
 class MainMenu(Menu):
     def __init__(self, game):
@@ -42,6 +43,7 @@ class MainMenu(Menu):
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
         self.cursor_rect.midtop = (self.mid_w + self.offset, self.mid_h + self.size_header_element)
+
 
     def display_menu(self):
         self.run_display = True 
@@ -90,6 +92,7 @@ class MainMenu(Menu):
 class OptionsMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
+        
         self.header = _("Options"), "Options"
         self.options_options = {
             "Volume": _("Volume"),
@@ -146,6 +149,9 @@ class OptionsMenu(Menu):
             index = (len(values) - 1) if index == 0 else index - 1
             self.options_values[key][0] = index
             # тут логика по смене языка
+            if key == "Language":
+                language = self.options_values[key][1][index]
+                self.update_translation(language)
         elif self.game.RIGHT_KEY:
             key = self.keys[self.state]
             index = self.options_values[key][0]
@@ -154,10 +160,19 @@ class OptionsMenu(Menu):
             index = index % len(values)
             self.options_values[key][0] = index
             # тут логика по смене языка
+            if key == "Language":
+                language = self.options_values[key][1][index]
+                self.update_translation(language)
 
-    def update_translation(self):
-        """Method for changing transaltion of fly"""
-        self.header = _("Main Menu"), "Main Menu"
+    def update_translation(self, language):
+        """Method for changing transaltion on fly"""
+        if language == "en":
+            _ = en.gettext
+            self.game.main_menu.update_translation()
+        elif language == "ru":
+            _ = ru.gettext
+        self.game.main_menu.update_translation()
+        self.header = _("Options"), "Options"
         self.options_options = {
             "Volume": _("Volume"),
             "Language" : _("Language"),
@@ -197,4 +212,3 @@ class CreditsMenu(Menu):
         if self.game.BACK_KEY:
             self.game.current_menu = self.game.main_menu
             self.run_display = False
-    

@@ -8,3 +8,7 @@ po/en/LC_MESSAGES/py-simple-shooter.po
 po/py-simple-shooter.pot
 .DS_Store
 .vscode
+__pycache__
+*swp
+venv/
+.idea/

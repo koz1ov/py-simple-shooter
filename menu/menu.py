@@ -123,6 +123,7 @@ class OptionsMenu(Menu):
             "Music": [0, ["Yes", "No", "Random"],
                       [_("Yes"), _("No"), _("Random")]]
         }
+        self.keys = list(self.options_options.keys())
         self.font_height_regular = self.game.DISPLAY_H // (4 * len(self.keys))
         self.font_height_header = self.font_height_regular * 2
         self.state = 0
@@ -130,7 +131,6 @@ class OptionsMenu(Menu):
         self.size_header_element = self.font_height_regular
         self.cursor_rect.midtop = (self.mid_w + self.offset,
                                    self.mid_h + self.size_header_element)
-        self.keys = list(self.options_options.keys())
 
     def display_menu(self):
         self.run_display = True
@@ -199,12 +199,11 @@ class OptionsMenu(Menu):
 
     def update_translation(self, language):
         """Method for changing transaltion on fly"""
+        global _
         if language == "en":
             _ = en.gettext
-            self.game.main_menu.update_translation()
         elif language == "ru":
             _ = ru.gettext
-        self.game.main_menu.update_translation()
         self.header = _("Options"), "Options"
         self.options_options = {
             "Volume": _("Volume"),
@@ -219,6 +218,7 @@ class OptionsMenu(Menu):
                         ["Yes", "No", "Random"],
                         [_("Yes"), _("No"), _("Random")]]
         }
+        self.game.main_menu.update_translation()
 
 
 class CreditsMenu(Menu):

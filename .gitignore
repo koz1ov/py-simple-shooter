@@ -6,3 +6,5 @@ menu/test_pydantic.py
 po/ru/LC_MESSAGES/py-simple-shooter.po
 po/en/LC_MESSAGES/py-simple-shooter.po
 po/py-simple-shooter.pot
+.DS_Store
+.vscode

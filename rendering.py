@@ -2,7 +2,7 @@
 
 import config as cfg
 import pygame as pg
-import player
+import player as player
 
 
 class Rendering:

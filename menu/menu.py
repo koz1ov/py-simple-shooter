@@ -1,4 +1,4 @@
-import pygame
+import pygame as pg
 import gettext
 en = gettext.translation("py-simple-shooter", "po", languages=["en"])
 ru = gettext.translation("py-simple-shooter", "po", languages=["ru"])
@@ -15,7 +15,7 @@ class Menu():
         self.run_display = True
         self.offset = -100
         self.cursor_height = 15
-        self.cursor_rect = pygame.Rect(
+        self.cursor_rect = pg.Rect(
             0, 0, self.cursor_height, self.cursor_height)
         global _
         if self.game.settings.data.language == 0:
@@ -29,7 +29,7 @@ class Menu():
 
     def blit_screen(self):
         self.game.window.blit(self.game.display, (0, 0))
-        pygame.display.update()
+        pg.display.update()
         self.game.reset_keys()
 
 
@@ -219,6 +219,7 @@ class OptionsMenu(Menu):
                         [_("Yes"), _("No"), _("Random")]]
         }
         self.game.main_menu.update_translation()
+        self.game.credits.update_translation()
 
 
 class CreditsMenu(Menu):
@@ -260,3 +261,10 @@ class CreditsMenu(Menu):
         if self.game.BACK_KEY:
             self.game.current_menu = self.game.main_menu
             self.run_display = False
+
+    def update_translation(self):
+        """Method for changing transaltion on fly"""
+        self.header = _("Credits"), "Credits"
+        self.menu_options = {
+            "Maked by Sasha and Petya": _("Maked by Sasha and Petya")
+        }

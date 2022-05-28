@@ -14,7 +14,7 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = 480, 270
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
-        self.font_name = "menu/COMIC2.TTF"
+        self.font_name = "fonts/comic2.ttf"
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.GRAY = (229, 229, 229)

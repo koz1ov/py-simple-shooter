@@ -1,4 +1,6 @@
 import pygame
+
+import sprites
 from settings import Settings
 from pydantic import ValidationError
 from menu.menu import MainMenu, OptionsMenu, CreditsMenu
@@ -35,6 +37,7 @@ class Game():
         self.current_menu = self.main_menu
         self.clock = pygame.time.Clock()
         self.player = player.Player()
+        self.sprites = sprites.Sprites()
         self.rendering = rendering.Rendering()
         self.interaction = interaction.Interaction()
 
@@ -56,7 +59,7 @@ class Game():
                 print(e.json())
             while self.playing:
                 self.playing = self.interaction.handle_events(self.player)
-                self.rendering.render(self.player)
+                self.rendering.render(self.player, self.sprites.sprites)
 
     def check_events(self):
         for event in pygame.event.get():

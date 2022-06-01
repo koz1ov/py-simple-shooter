@@ -1,7 +1,11 @@
 import pygame
 from settings import Settings
 from pydantic import ValidationError
-from menu import MainMenu, OptionsMenu, CreditsMenu
+from menu.menu import MainMenu, OptionsMenu, CreditsMenu
+import interaction
+import player
+import rendering
+import config
 
 
 class Game():
@@ -11,7 +15,8 @@ class Game():
         self.running, self.playing = True, False
         self.UP_KEY, self.DOWN_KEY, self.START_KEY = False, False, False
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
-        self.DISPLAY_W, self.DISPLAY_H = 480, 270
+        self.ESC_KEY = False
+        self.DISPLAY_W, self.DISPLAY_H = config.WIDTH, config.HEIGHT
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
         self.font_name = "fonts/comic2.ttf"
@@ -28,6 +33,10 @@ class Game():
         self.options.options_values["Language"][0] = lang
         self.credits = CreditsMenu(self)
         self.current_menu = self.main_menu
+        self.clock = pygame.time.Clock()
+        self.player = player.Player()
+        self.rendering = rendering.Rendering()
+        self.interaction = interaction.Interaction()
 
     def save_game(self):
         vol = self.options.options_values["Volume"][0]
@@ -46,17 +55,8 @@ class Game():
             except ValidationError as e:
                 print(e.json())
             while self.playing:
-                self.check_events()
-                if self.START_KEY:
-                    # тут выход обратно в меню
-                    self.playing = False
-                self.display.fill(self.GRAY)
-                self.draw_text(
-                    "Thank for playing", 20,
-                    self.DISPLAY_W/2, self.DISPLAY_H/2)
-                self.window.blit(self.display, (0, 0))
-                pygame.display.update()
-                self.reset_keys()
+                self.playing = self.interaction.handle_events(self.player)
+                self.rendering.render(self.player)
 
     def check_events(self):
         for event in pygame.event.get():
@@ -76,10 +76,13 @@ class Game():
                     self.LEFT_KEY = True
                 if event.key == pygame.K_RIGHT:
                     self.RIGHT_KEY = True
+                if event.key == pygame.K_ESCAPE:
+                    self.ESC_KEY = True
 
     def reset_keys(self):
         self.UP_KEY, self.DOWN_KEY, self.START_KEY = False, False, False
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
+        self.ESC_KEY = False
 
     def draw_text(self, text, size, x, y):
         font = pygame.font.Font(self.font_name, size)

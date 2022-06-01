@@ -11,7 +11,7 @@ class Interaction:
         """Initialise the clock object for time tracking."""
         self._clock = pg.time.Clock()
 
-    def process_events(self, player: player.Player) -> None:
+    def handle_events(self, player: player.Player) -> bool:
         """Process keyboard events and change the world state."""
         elapsed = self._clock.tick(cfg.MAX_FPS)
 
@@ -24,6 +24,9 @@ class Interaction:
             player.rotate(elapsed * -cfg.ROTATE_SPEED)
         if keys[pg.K_RIGHT]:
             player.rotate(elapsed * cfg.ROTATE_SPEED)
+        if keys[pg.K_ESCAPE]:
+            return False
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 exit()
+        return True

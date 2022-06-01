@@ -1,5 +1,4 @@
 env
-shooter
 menu/__pycache__
 menu/draft.py
 menu/test_pydantic.py

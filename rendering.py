@@ -2,7 +2,8 @@
 
 import config as cfg
 import pygame as pg
-import player as player
+import player
+import sprites
 
 
 class Rendering:
@@ -17,11 +18,13 @@ class Rendering:
         """Init the display and load textures."""
         self._sc = pg.display.set_mode((cfg.WIDTH, cfg.HEIGHT))
         self._load_textures()
+        self._z_buffer = [None] * cfg.WIDTH
 
-    def render(self, player: player.Player):
+    def render(self, player: player.Player, sprites_list):
         """Render an image on the screen."""
         self._sc.fill((255, 0, 0))
         self._render_walls(player.pos, player.dir, player.plane)
+        self._render_sprites(player.pos, player.dir, player.plane, sprites_list)
         self._draw_minimap(player.pos)
         pg.display.flip()
         # TODO: render floor and ceiling
@@ -104,3 +107,37 @@ class Rendering:
             wall_column = self._textures[texture_num].subsurface(tex_x, 0, 1, self.tex_height)
             wall_column = pg.transform.scale(wall_column, (1, height))
             self._sc.blit(wall_column, (x, cfg.HEIGHT // 2 - height // 2))
+
+            self._z_buffer[x] = dist
+
+    def _render_sprites(self, player_pos: pg.math.Vector2, player_dir: pg.math.Vector2,
+                        plane_vec: pg.math.Vector2, sprites_list: list[sprites.Sprite]):
+        sprites_list.sort(key=lambda sprite: (sprite.pos - player_pos).length_squared(),
+                          reverse=True)
+        for sprite in sprites_list:
+            rel_pos = sprite.pos - player_pos
+            inv_det = 1 / (plane_vec.x * player_dir.y - player_dir.x * plane_vec.y)
+
+            transform_x = inv_det * (player_dir.y * rel_pos.x - player_dir.x * rel_pos.y)
+            transform_y = inv_det * (-plane_vec.y * rel_pos.x + plane_vec.x * rel_pos.y)
+
+            if transform_y <= 0:
+                continue
+
+            screen_x = int((cfg.WIDTH // 2) * (1 + transform_x / transform_y))
+            size_on_screen = int(cfg.HEIGHT / transform_y)
+            if size_on_screen > 3000 or abs(screen_x) >= (cfg.WIDTH + size_on_screen):
+                continue
+
+            xs = [x for x in range(max(screen_x - size_on_screen // 2, 0),
+                                   min(screen_x + size_on_screen // 2, cfg.WIDTH))
+                  if transform_y < self._z_buffer[x]]
+            if not xs:
+                continue
+
+            x_size = abs(xs[-1] - xs[0])
+            shift = 0 if (xs[0] == screen_x - size_on_screen // 2) else size_on_screen - x_size
+            scaled = pg.transform.scale(sprite.texture, (size_on_screen, size_on_screen))
+            self._sc.blit(scaled, (screen_x - size_on_screen // 2 + shift,
+                          cfg.HEIGHT // 2 - size_on_screen // 2),
+                          area=(shift, 0, x_size, size_on_screen))

@@ -1,5 +1,5 @@
 """Define an Interaction class for event handling."""
-import config as cfg
+from . import config as cfg
 import pygame as pg
 from . import player
 

@@ -1,4 +1,5 @@
 from pydantic import BaseModel, Field
+path_to_menu = "/".join(str(__file__).split("/")[:-1]) + "/"
 
 
 class SettingsData(BaseModel):
@@ -8,7 +9,7 @@ class SettingsData(BaseModel):
 
 
 class Settings():
-    def __init__(self, path: str = "menu/settings.json") -> None:
+    def __init__(self, path: str = path_to_menu + "menu/settings.json") -> None:
         self.path = path
         file = open(self.path, "r")
         setting_string = file.read()
@@ -16,6 +17,6 @@ class Settings():
         file.close()
 
     def save(self):
-        file = open("menu/settings.json", "w")
+        file = open(path_to_menu + "menu/settings.json", "w")
         file.write(self.data.json())
         file.close()

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-10 22:40+0300\n"
-"PO-Revision-Date: 2022-06-10 22:40+0300\n"
+"POT-Creation-Date: 2022-06-11 01:49+0300\n"
+"PO-Revision-Date: 2022-06-11 01:49+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
 "Language-Team: ru <LL@li.org>\n"
@@ -19,72 +19,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: src/py-simple-shooter/menu/menu.py:39
+#: src/py-simple-shooter/menu/menu.py:40
 msgid "Menu"
-msgstr ""
-
-#: src/py-simple-shooter/menu/menu.py:41 src/py-simple-shooter/menu/menu.py:105
-msgid "Start Game"
-msgstr ""
+msgstr "Меню"
 
 #: src/py-simple-shooter/menu/menu.py:42 src/py-simple-shooter/menu/menu.py:106
-#: src/py-simple-shooter/menu/menu.py:114
-#: src/py-simple-shooter/menu/menu.py:207
-msgid "Options"
-msgstr ""
+msgid "Start Game"
+msgstr "Начать Играть"
 
 #: src/py-simple-shooter/menu/menu.py:43 src/py-simple-shooter/menu/menu.py:107
-#: src/py-simple-shooter/menu/menu.py:228
-#: src/py-simple-shooter/menu/menu.py:267
+#: src/py-simple-shooter/menu/menu.py:115
+#: src/py-simple-shooter/menu/menu.py:208
+msgid "Options"
+msgstr "Настройки"
+
+#: src/py-simple-shooter/menu/menu.py:44 src/py-simple-shooter/menu/menu.py:108
+#: src/py-simple-shooter/menu/menu.py:229
+#: src/py-simple-shooter/menu/menu.py:268
 msgid "Credits"
-msgstr ""
+msgstr "Информация"
 
-#: src/py-simple-shooter/menu/menu.py:103
+#: src/py-simple-shooter/menu/menu.py:104
 msgid "Main Menu"
-msgstr ""
-
-#: src/py-simple-shooter/menu/menu.py:116
-#: src/py-simple-shooter/menu/menu.py:209
-msgid "Volume"
-msgstr ""
+msgstr "Главное Меню"
 
 #: src/py-simple-shooter/menu/menu.py:117
 #: src/py-simple-shooter/menu/menu.py:210
-msgid "Language"
-msgstr ""
+msgid "Volume"
+msgstr "Громкость"
 
 #: src/py-simple-shooter/menu/menu.py:118
 #: src/py-simple-shooter/menu/menu.py:211
+msgid "Language"
+msgstr "Язык"
+
+#: src/py-simple-shooter/menu/menu.py:119
+#: src/py-simple-shooter/menu/menu.py:212
 msgid "Music"
-msgstr ""
+msgstr "Музыка"
 
-#: src/py-simple-shooter/menu/menu.py:122
-#: src/py-simple-shooter/menu/menu.py:216
+#: src/py-simple-shooter/menu/menu.py:123
+#: src/py-simple-shooter/menu/menu.py:217
 msgid "ru"
-msgstr ""
+msgstr "рус"
 
-#: src/py-simple-shooter/menu/menu.py:122
-#: src/py-simple-shooter/menu/menu.py:216
+#: src/py-simple-shooter/menu/menu.py:123
+#: src/py-simple-shooter/menu/menu.py:217
 msgid "en"
-msgstr ""
+msgstr "англ"
 
-#: src/py-simple-shooter/menu/menu.py:124
-#: src/py-simple-shooter/menu/menu.py:219
+#: src/py-simple-shooter/menu/menu.py:125
+#: src/py-simple-shooter/menu/menu.py:220
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
-#: src/py-simple-shooter/menu/menu.py:124
-#: src/py-simple-shooter/menu/menu.py:219
+#: src/py-simple-shooter/menu/menu.py:125
+#: src/py-simple-shooter/menu/menu.py:220
 msgid "No"
-msgstr ""
+msgstr "Нет"
 
-#: src/py-simple-shooter/menu/menu.py:124
-#: src/py-simple-shooter/menu/menu.py:219
+#: src/py-simple-shooter/menu/menu.py:125
+#: src/py-simple-shooter/menu/menu.py:220
 msgid "Random"
-msgstr ""
+msgstr "Случайно"
 
-#: src/py-simple-shooter/menu/menu.py:230
-#: src/py-simple-shooter/menu/menu.py:269
+#: src/py-simple-shooter/menu/menu.py:231
+#: src/py-simple-shooter/menu/menu.py:270
 msgid "Maked by Sasha and Petya"
-msgstr ""
+msgstr "Сделано Сашей и Петей"
 

@@ -9,8 +9,9 @@ class Sprite:
 
 class Sprites:
     def __init__(self):
+        path_to_pics = "/".join(str(__file__).split("/")[:-1]) + "/"
         Sprites.textures = {
-            'enemy': pg.image.load('pics/enemy.png').convert_alpha(),
+            'enemy': pg.image.load(path_to_pics + 'pics/enemy.png').convert_alpha(),
         }
 
         self.sprites = [

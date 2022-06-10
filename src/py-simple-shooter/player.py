@@ -1,7 +1,7 @@
 """Define a Player class for managing the player state."""
 
 import pygame as pg
-import config as cfg
+from . import config as cfg
 import math
 
 

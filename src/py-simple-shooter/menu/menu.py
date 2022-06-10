@@ -36,7 +36,7 @@ class Menu():
 class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
-        self.header = _("Main Menu"), "Main Menu"
+        self.header = _("Menu"), "Menu"
         self.menu_options = {
             "Start": _("Start Game"),
             "Options": _("Options"),

@@ -1,13 +1,12 @@
 import pygame
-
-import sprites
-from settings import Settings
+from . import sprites
+from .settings import Settings
 from pydantic import ValidationError
-from menu.menu import MainMenu, OptionsMenu, CreditsMenu
-import interaction
-import player
-import rendering
-import config
+from .menu.menu import MainMenu, OptionsMenu, CreditsMenu
+from . import interaction
+from . import player
+from . import rendering
+from . import config
 
 
 class Game():

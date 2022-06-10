@@ -1,0 +1,3 @@
+[build-system]
+requires = ["build", "setuptools", "pydantic", "pygame", "doit"]
+build-backend = "setuptools.build_meta"

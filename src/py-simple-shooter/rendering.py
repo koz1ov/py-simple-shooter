@@ -2,8 +2,8 @@
 
 import config as cfg
 import pygame as pg
-import player
-import sprites
+from . import player
+from . import sprites
 
 
 class Rendering:

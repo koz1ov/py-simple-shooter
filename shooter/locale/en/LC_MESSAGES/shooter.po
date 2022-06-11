@@ -1,0 +1,78 @@
+# English translations for PROJECT.
+# Copyright (C) 2022 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2022-06-11 13:24+0300\n"
+"PO-Revision-Date: 2022-06-11 13:24+0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.10.1\n"
+
+#: shooter/menu/menu.py:42
+msgid "Menu"
+msgstr ""
+
+#: shooter/menu/menu.py:44 shooter/menu/menu.py:108
+msgid "Start Game"
+msgstr ""
+
+#: shooter/menu/menu.py:45 shooter/menu/menu.py:109 shooter/menu/menu.py:117
+#: shooter/menu/menu.py:210
+msgid "Options"
+msgstr ""
+
+#: shooter/menu/menu.py:46 shooter/menu/menu.py:110 shooter/menu/menu.py:231
+#: shooter/menu/menu.py:270
+msgid "Credits"
+msgstr ""
+
+#: shooter/menu/menu.py:106
+msgid "Main Menu"
+msgstr ""
+
+#: shooter/menu/menu.py:119 shooter/menu/menu.py:212
+msgid "Volume"
+msgstr ""
+
+#: shooter/menu/menu.py:120 shooter/menu/menu.py:213
+msgid "Language"
+msgstr ""
+
+#: shooter/menu/menu.py:121 shooter/menu/menu.py:214
+msgid "Music"
+msgstr ""
+
+#: shooter/menu/menu.py:125 shooter/menu/menu.py:219
+msgid "ru"
+msgstr ""
+
+#: shooter/menu/menu.py:125 shooter/menu/menu.py:219
+msgid "en"
+msgstr ""
+
+#: shooter/menu/menu.py:127 shooter/menu/menu.py:222
+msgid "Yes"
+msgstr ""
+
+#: shooter/menu/menu.py:127 shooter/menu/menu.py:222
+msgid "No"
+msgstr ""
+
+#: shooter/menu/menu.py:127 shooter/menu/menu.py:222
+msgid "Random"
+msgstr ""
+
+#: shooter/menu/menu.py:233 shooter/menu/menu.py:272
+msgid "Maked by Sasha and Petya"
+msgstr ""
+

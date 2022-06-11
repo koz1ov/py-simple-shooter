@@ -1,13 +1,12 @@
 import pygame
-
-import sprites
-from settings import Settings
+from . import sprites
+from .settings import Settings
 from pydantic import ValidationError
-from menu.menu import MainMenu, OptionsMenu, CreditsMenu
-import interaction
-import player
-import rendering
-import config
+from .menu.menu import MainMenu, OptionsMenu, CreditsMenu
+from . import interaction
+from . import player
+from . import rendering
+from . import config
 
 
 class Game():
@@ -21,7 +20,8 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = config.WIDTH, config.HEIGHT
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
-        self.font_name = "fonts/comic2.ttf"
+        path_to_font = "/".join(str(__file__).split("/")[:-1]) + "/fonts/comic2.ttf"
+        self.font_name = path_to_font
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
         self.GRAY = (229, 229, 229)

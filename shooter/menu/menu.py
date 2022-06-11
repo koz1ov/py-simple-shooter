@@ -1,7 +1,10 @@
 import pygame as pg
 import gettext
-en = gettext.translation("py-simple-shooter", "po", languages=["en"])
-ru = gettext.translation("py-simple-shooter", "po", languages=["ru"])
+import os
+
+path_to_locale = os.path.dirname(__file__) + "/../locale/"
+en = gettext.translation("shooter", path_to_locale, languages=["en"])
+ru = gettext.translation("shooter", path_to_locale, languages=["ru"])
 ru.install()
 en.install()
 _ = ru.gettext
@@ -36,7 +39,7 @@ class Menu():
 class MainMenu(Menu):
     def __init__(self, game):
         Menu.__init__(self, game)
-        self.header = _("Main Menu"), "Main Menu"
+        self.header = _("Menu"), "Menu"
         self.menu_options = {
             "Start": _("Start Game"),
             "Options": _("Options"),
@@ -49,7 +52,7 @@ class MainMenu(Menu):
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
         self.cursor_rect.midtop = (
-            self.mid_w + self.offset, self.mid_h + self.size_header_element)
+            self.mid_w // 2, self.mid_h + self.size_header_element)
 
     def display_menu(self):
         self.run_display = True
@@ -74,14 +77,14 @@ class MainMenu(Menu):
         if self.game.DOWN_KEY:
             self.state += 1
             self.state = self.state % len(self.keys)
-            self.cursor_rect.midtop = (self.mid_w + self.offset,
+            self.cursor_rect.midtop = (self.mid_w // 2,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
         elif self.game.UP_KEY:
             self.state = ((len(self.keys) - 1)
                           if self.state == 0
                           else (self.state - 1))
-            self.cursor_rect.midtop = (self.mid_w + self.offset,
+            self.cursor_rect.midtop = (self.mid_w // 2,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
 
@@ -129,7 +132,7 @@ class OptionsMenu(Menu):
         self.state = 0
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
-        self.cursor_rect.midtop = (self.mid_w + self.offset,
+        self.cursor_rect.midtop = (self.mid_w // 2,
                                    self.mid_h + self.size_header_element)
 
     def display_menu(self):
@@ -159,14 +162,14 @@ class OptionsMenu(Menu):
         if self.game.DOWN_KEY:
             self.state += 1
             self.state = self.state % len(self.keys)
-            self.cursor_rect.midtop = (self.mid_w + self.offset,
+            self.cursor_rect.midtop = (self.mid_w // 2,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
         elif self.game.UP_KEY:
             self.state = ((len(self.keys) - 1)
                           if self.state == 0
                           else (self.state - 1))
-            self.cursor_rect.midtop = (self.mid_w + self.offset,
+            self.cursor_rect.midtop = (self.mid_w // 2,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
 
@@ -230,12 +233,12 @@ class CreditsMenu(Menu):
             "Maked by Sasha and Petya": _("Maked by Sasha and Petya")
         }
         self.keys = list(self.menu_options.keys())
-        self.font_height_regular = self.game.DISPLAY_H // (10 * len(self.keys))
+        self.font_height_regular = self.game.DISPLAY_H // (20 * len(self.keys))
         self.font_height_header = self.font_height_regular * 2
         self.state = 0
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
-        self.cursor_rect.midtop = (self.mid_w + self.offset,
+        self.cursor_rect.midtop = (self.mid_w // 2,
                                    self.mid_h + self.size_header_element)
 
     def display_menu(self):

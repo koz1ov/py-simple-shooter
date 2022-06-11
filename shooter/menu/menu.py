@@ -1,8 +1,10 @@
 import pygame as pg
 import gettext
-path_to_locale = "/".join(str(__file__).split("/")[:-2]) + "/locale/"
-en = gettext.translation("py-simple-shooter", path_to_locale, languages=["en"])
-ru = gettext.translation("py-simple-shooter", path_to_locale, languages=["ru"])
+import os
+
+path_to_locale = os.path.dirname(__file__) + "/../locale/"
+en = gettext.translation("shooter", path_to_locale, languages=["en"])
+ru = gettext.translation("shooter", path_to_locale, languages=["ru"])
 ru.install()
 en.install()
 _ = ru.gettext

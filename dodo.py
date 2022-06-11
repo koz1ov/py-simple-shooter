@@ -28,7 +28,7 @@ def task_init() -> dict:
             'pybabel init -D shooter -i shooter/po/shooter.pot -d shooter/locale -l ru',
             'pybabel init -D shooter -i shooter/po/shooter.pot -d shooter/locale -l en',
             ],
-        "file_dep": ['src/py-simple-shooter/po/py-simple-shooter.pot'],
+        "file_dep": ['shooter/po/shooter.pot'],
         "targets": [
             'shooter/locale/ru/LC_MESSAGES/shooter.po',
             'shooter/locale/en/LC_MESSAGES/shooter.po',

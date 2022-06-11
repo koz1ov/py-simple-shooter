@@ -1,5 +1,6 @@
 from pydantic import BaseModel, Field
-path_to_menu = "/".join(str(__file__).split("/")[:-1]) + "/"
+import os
+path_to_menu = os.path.dirname(__file__)
 
 
 class SettingsData(BaseModel):
@@ -11,7 +12,7 @@ class SettingsData(BaseModel):
 
 class Settings():
     """Class handler, which accumulate settings data and save this data to file."""
-    def __init__(self, path: str = path_to_menu + "menu/settings.json") -> None:
+    def __init__(self, path: str = path_to_menu + "/menu/settings.json") -> None:
         """Init data: read settings-json-file and keep itself."""
         self.path = path
         file = open(self.path, "r")
@@ -21,6 +22,6 @@ class Settings():
 
     def save(self):
         """Function for save actual setting to settings-json-file."""
-        file = open(path_to_menu + "menu/settings.json", "w")
+        file = open(path_to_menu + "/menu/settings.json", "w")
         file.write(self.data.json())
         file.close()

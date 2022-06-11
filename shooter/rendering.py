@@ -4,6 +4,7 @@ from . import config as cfg
 import pygame as pg
 from . import player
 from . import sprites
+import os
 
 
 class Rendering:
@@ -50,16 +51,17 @@ class Rendering:
 
     def _load_textures(self):
         """Load the texture images from files and save its dimensions."""
-        path_to_pics = "/".join(str(__file__).split("/")[:-1]) + "/"
+        
+        path_to_pics = os.path.dirname(__file__)
         self._textures = {
-            1: pg.image.load(path_to_pics + 'pics/eagle.png').convert(),
-            2: pg.image.load(path_to_pics + 'pics/redbrick.png').convert(),
-            3: pg.image.load(path_to_pics + 'pics/purplestone.png').convert(),
-            4: pg.image.load(path_to_pics + 'pics/greystone.png').convert(),
-            5: pg.image.load(path_to_pics + 'pics/bluestone.png').convert(),
-            6: pg.image.load(path_to_pics + 'pics/mossy.png').convert(),
-            7: pg.image.load(path_to_pics + 'pics/wood.png').convert(),
-            8: pg.image.load(path_to_pics + 'pics/colorstone.png').convert()
+            1: pg.image.load(path_to_pics + '/pics/eagle.png').convert(),
+            2: pg.image.load(path_to_pics + '/pics/redbrick.png').convert(),
+            3: pg.image.load(path_to_pics + '/pics/purplestone.png').convert(),
+            4: pg.image.load(path_to_pics + '/pics/greystone.png').convert(),
+            5: pg.image.load(path_to_pics + '/pics/bluestone.png').convert(),
+            6: pg.image.load(path_to_pics + '/pics/mossy.png').convert(),
+            7: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            8: pg.image.load(path_to_pics + '/pics/colorstone.png').convert()
         }
         self.tex_width = self._textures[1].get_width()
         self.tex_height = self._textures[1].get_height()

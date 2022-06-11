@@ -1,9 +1,2 @@
-build==0.8.0
-doit==0.36.0
-flake8==4.0.1
-pep517==0.12.0
-pybabel==0.0.0.dev0
 pydantic==1.9.1
-pyflakes==2.4.0
 pygame==2.1.2
-tomli==2.0.1

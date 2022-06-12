@@ -1,10 +1,16 @@
 """Define a Rendering class for managing the game rendering."""
 
-from . import config as cfg
+import functools
 import pygame as pg
+import os
+from . import config as cfg
 from . import player
 from . import sprites
-import os
+
+
+@functools.lru_cache(maxsize=100)
+def _scale_sprite(sprite, size_on_screen):
+    return pg.transform.scale(sprite, (size_on_screen, size_on_screen))
 
 
 class Rendering:
@@ -15,10 +21,11 @@ class Rendering:
         _textures: dict with texture objects
     """
 
-    def __init__(self):
+    def __init__(self, game: 'Game'):  # noqa: F821
         """Init the display and load textures."""
         self._sc = pg.display.set_mode((cfg.WIDTH, cfg.HEIGHT))
         self._load_textures()
+        self._clock = game.clock
         self._z_buffer = [None] * cfg.WIDTH
 
     def render(self, player: player.Player, sprites_list):
@@ -27,6 +34,7 @@ class Rendering:
         self._render_walls(player.pos, player.dir, player.plane)
         self._render_sprites(player.pos, player.dir, player.plane, sprites_list)
         self._draw_minimap(player.pos)
+        self._debug_fps()
         pg.display.flip()
         # TODO: render floor and ceiling
 
@@ -51,17 +59,16 @@ class Rendering:
 
     def _load_textures(self):
         """Load the texture images from files and save its dimensions."""
-        
         path_to_pics = os.path.dirname(__file__)
         self._textures = {
-            1: pg.image.load(path_to_pics + '/pics/eagle.png').convert(),
-            2: pg.image.load(path_to_pics + '/pics/redbrick.png').convert(),
-            3: pg.image.load(path_to_pics + '/pics/purplestone.png').convert(),
-            4: pg.image.load(path_to_pics + '/pics/greystone.png').convert(),
-            5: pg.image.load(path_to_pics + '/pics/bluestone.png').convert(),
-            6: pg.image.load(path_to_pics + '/pics/mossy.png').convert(),
+            1: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            2: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            3: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            4: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            5: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            6: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
             7: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            8: pg.image.load(path_to_pics + '/pics/colorstone.png').convert()
+            8: pg.image.load(path_to_pics + '/pics/wood.png').convert()
         }
         self.tex_width = self._textures[1].get_width()
         self.tex_height = self._textures[1].get_height()
@@ -69,7 +76,8 @@ class Rendering:
     def _render_walls(self, player_pos: pg.math.Vector2, player_dir: pg.math.Vector2,
                       plane_vec: pg.math.Vector2):
         """Cast rays from left to the right, calculate distances, and draw column by column."""
-        for x in range(cfg.WIDTH):
+        assert cfg.WIDTH % cfg.WALL_RENDER_SCALE == 0
+        for x in range(0, cfg.WIDTH, cfg.WALL_RENDER_SCALE):
             camera_x = 2 * x / cfg.WIDTH - 1
             ray = player_dir + plane_vec * camera_x
             ray.x, ray.y = ray.x if ray.x else 1e-30, ray.y if ray.y else 1e-30
@@ -105,16 +113,19 @@ class Rendering:
             wall_x = player_pos.y + dist * ray.y if side == 'x' else player_pos.x + dist * ray.x
             wall_x -= int(wall_x)
 
+            height = min(cfg.HEIGHT / (dist if dist else 1e-30), 2 * cfg.HEIGHT)
             tex_x = int(wall_x * self.tex_width)
-            height = min(cfg.HEIGHT / (dist if dist else 1e-30), 10 * cfg.HEIGHT)
-            wall_column = self._textures[texture_num].subsurface(tex_x, 0, 1, self.tex_height)
-            wall_column = pg.transform.scale(wall_column, (1, height))
+            wall_column = self._textures[texture_num].subsurface(tex_x, 0,
+                                                                 min(cfg.WALL_RENDER_SCALE,
+                                                                     self.tex_width - tex_x),
+                                                                 self.tex_height)
+            wall_column = pg.transform.scale(wall_column, (cfg.WALL_RENDER_SCALE, height))
             self._sc.blit(wall_column, (x, cfg.HEIGHT // 2 - height // 2))
-
-            self._z_buffer[x] = dist
+            self._z_buffer[x: x + cfg.WALL_RENDER_SCALE] = [dist] * cfg.WALL_RENDER_SCALE
 
     def _render_sprites(self, player_pos: pg.math.Vector2, player_dir: pg.math.Vector2,
                         plane_vec: pg.math.Vector2, sprites_list: list[sprites.Sprite]):
+        """Render sprites."""
         sprites_list.sort(key=lambda sprite: (sprite.pos - player_pos).length_squared(),
                           reverse=True)
         for sprite in sprites_list:
@@ -129,7 +140,8 @@ class Rendering:
 
             screen_x = int((cfg.WIDTH // 2) * (1 + transform_x / transform_y))
             size_on_screen = int(cfg.HEIGHT / transform_y)
-            if size_on_screen > 3000 or abs(screen_x) >= (cfg.WIDTH + size_on_screen):
+            size_on_screen = size_on_screen // 10 * 10  # optimization for caching
+            if size_on_screen > 2 * cfg.HEIGHT or abs(screen_x) >= (cfg.WIDTH + size_on_screen):
                 continue
 
             xs = [x for x in range(max(screen_x - size_on_screen // 2, 0),
@@ -138,9 +150,12 @@ class Rendering:
             if not xs:
                 continue
 
-            x_size = abs(xs[-1] - xs[0])
-            shift = 0 if (xs[0] == screen_x - size_on_screen // 2) else size_on_screen - x_size
-            scaled = pg.transform.scale(sprite.texture, (size_on_screen, size_on_screen))
-            self._sc.blit(scaled, (screen_x - size_on_screen // 2 + shift,
-                          cfg.HEIGHT // 2 - size_on_screen // 2),
-                          area=(shift, 0, x_size, size_on_screen))
+            start = xs[0] - (screen_x - size_on_screen // 2)
+            scaled = _scale_sprite(sprite.texture, size_on_screen)
+            if True:
+                self._sc.blit(scaled, (xs[0], cfg.HEIGHT // 2 - size_on_screen // 2),
+                              area=(start, 0, xs[-1] - xs[0], size_on_screen))
+
+    def _debug_fps(self):
+
+        print(self._clock.get_fps())

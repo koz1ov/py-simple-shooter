@@ -1,15 +1,22 @@
+"""Define the classes for sprite managing."""
 import pygame as pg
 import os
 
 
 class Sprite:
+    """The class that describes sprite."""
+
     def __init__(self, pos_x, pos_y, tex_name):
+        """Init sprite state."""
         self.pos = pg.math.Vector2(pos_x, pos_y)
         self.texture: pg.image = Sprites.textures[tex_name]
 
 
 class Sprites:
+    """The class that controls the state of the sprites."""
+
     def __init__(self):
+        """Load sprite textures and init all sprites."""
         path_to_pics = os.path.dirname(__file__)
         Sprites.textures = {
             'enemy': pg.image.load(path_to_pics + '/pics/enemy.png').convert_alpha(),

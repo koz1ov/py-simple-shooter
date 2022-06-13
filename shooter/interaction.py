@@ -44,11 +44,15 @@ class Interaction:
         """Initialise the clock object for time tracking."""
         self.sprites = game.sprites
         self._clock = game.clock
+        self._was_stopped = False
         self._last_shot_time = pg.time.get_ticks()
 
     def handle_events(self, player: player.Player, visible_sprites: list[sprites.Sprite]) -> bool:
         """Process keyboard events and change the world state."""
         elapsed = self._clock.tick(cfg.MAX_FPS)
+        if self._was_stopped:
+            self._was_stopped = False
+            return True
 
         keys = pg.key.get_pressed()
         if keys[pg.K_UP]:
@@ -60,6 +64,7 @@ class Interaction:
         if keys[pg.K_RIGHT]:
             player.rotate(elapsed * cfg.ROTATE_SPEED)
         if keys[pg.K_ESCAPE]:
+            self._was_stopped = True
             return False
         if keys[pg.K_SPACE]:
             now = pg.time.get_ticks()

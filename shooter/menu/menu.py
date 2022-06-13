@@ -1,15 +1,7 @@
 """Define some menu classes."""
 
 import pygame as pg
-import gettext
-import os
-
-path_to_locale = os.path.dirname(__file__) + "/../locale/"
-en = gettext.translation("shooter", path_to_locale, languages=["en"])
-ru = gettext.translation("shooter", path_to_locale, languages=["ru"])
-ru.install()
-en.install()
-_ = ru.gettext
+from .. import translation as tr
 
 
 class Menu():
@@ -38,11 +30,10 @@ class Menu():
         self.cursor_height = 15
         self.cursor_rect = pg.Rect(
             0, 0, self.cursor_height, self.cursor_height)
-        global _
         if self.game.settings.data.language == 0:
-            _ = ru.gettext
+            tr.tr = tr.ru.gettext
         else:
-            _ = en.gettext
+            tr.tr = tr.en.gettext
 
     def draw_cursor(self):
         """Draw cursor using draw text."""
@@ -80,11 +71,11 @@ class MainMenu(Menu):
     def __init__(self, game):
         """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
-        self.header = _("Menu"), "Menu"
+        self.header = tr.tr("Menu"), "Menu"
         self.menu_options = {
-            "Start": _("Start Game"),
-            "Options": _("Options"),
-            "Credits": _("Credits")
+            "Start": tr.tr("Start Game"),
+            "Options": tr.tr("Options"),
+            "Credits": tr.tr("Credits")
         }
         self.keys = list(self.menu_options.keys())
         self.font_height_regular = self.game.DISPLAY_H // (4 * len(self.keys))
@@ -147,11 +138,13 @@ class MainMenu(Menu):
 
     def update_translation(self):
         """Change transaltion on fly."""
-        self.header = _("Main Menu"), "Main Menu"
+        self.header = tr.tr("Main Menu"), "Main Menu"
+        """Method for changing transaltion on fly"""
+        self.header = tr.tr("Main Menu"), "Main Menu"
         self.menu_options = {
-            "Start": _("Start Game"),
-            "Options": _("Options"),
-            "Credits": _("Credits")
+            "Start": tr.tr("Start Game"),
+            "Options": tr.tr("Options"),
+            "Credits": tr.tr("Credits")
         }
 
 
@@ -181,17 +174,17 @@ class OptionsMenu(Menu):
     def __init__(self, game):
         """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
-        self.header = _("Options"), "Options"
+        self.header = tr.tr("Options"), "Options"
         self.options_options = {
-            "Volume": _("Volume"),
-            "Language": _("Language"),
-            "Music": _("Music")
+            "Volume": tr.tr("Volume"),
+            "Language": tr.tr("Language"),
+            "Music": tr.tr("Music")
         }
         self.options_values = {
             "Volume": [0, range(5), range(5)],
-            "Language": [0, ["ru", "en"], [_("ru"), _("en")]],
+            "Language": [0, ["ru", "en"], [tr.tr("ru"), tr.tr("en")]],
             "Music": [0, ["Yes", "No", "Random"],
-                      [_("Yes"), _("No"), _("Random")]]
+                      [tr.tr("Yes"), tr.tr("No"), tr.tr("Random")]]
         }
         self.keys = list(self.options_options.keys())
         self.font_height_regular = self.game.DISPLAY_H // (4 * len(self.keys))
@@ -274,24 +267,23 @@ class OptionsMenu(Menu):
 
     def update_translation(self, language):
         """Change transaltion on fly."""
-        global _
         if language == "en":
-            _ = en.gettext
+            tr.tr = tr.en.gettext
         elif language == "ru":
-            _ = ru.gettext
-        self.header = _("Options"), "Options"
+            tr.tr = tr.ru.gettext
+        self.header = tr.tr("Options"), "Options"
         self.options_options = {
-            "Volume": _("Volume"),
-            "Language": _("Language"),
-            "Music": _("Music")
+            "Volume": tr.tr("Volume"),
+            "Language": tr.tr("Language"),
+            "Music": tr.tr("Music")
         }
         self.options_values = {
             "Volume": [self.options_values["Volume"][0], range(5), range(5)],
             "Language": [self.options_values["Language"][0],
-                         ["ru", "en"], [_("ru"), _("en")]],
+                         ["ru", "en"], [tr.tr("ru"), tr.tr("en")]],
             "Music": [self.options_values["Music"][0],
                         ["Yes", "No", "Random"],
-                        [_("Yes"), _("No"), _("Random")]]
+                        [tr.tr("Yes"), tr.tr("No"), tr.tr("Random")]]
         }
         self.game.main_menu.update_translation()
         self.game.credits.update_translation()
@@ -321,9 +313,9 @@ class CreditsMenu(Menu):
     def __init__(self, game):
         """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
-        self.header = _("Credits"), "Credits"
+        self.header = tr.tr("Credits"), "Credits"
         self.menu_options = {
-            "Maked by Sasha and Petya": _("Maked by Sasha and Petya")
+            "Maked by Sasha and Petya": tr.tr("Maked by Sasha and Petya")
         }
         self.keys = list(self.menu_options.keys())
         self.font_height_regular = self.game.DISPLAY_H // (20 * len(self.keys))
@@ -361,8 +353,8 @@ class CreditsMenu(Menu):
             self.run_display = False
 
     def update_translation(self):
-        """Change transaltion on fly."""
-        self.header = _("Credits"), "Credits"
+        """Method for changing transaltion on fly"""
+        self.header = tr.tr("Credits"), "Credits"
         self.menu_options = {
-            "Maked by Sasha and Petya": _("Maked by Sasha and Petya")
+            "Maked by Sasha and Petya": tr.tr("Maked by Sasha and Petya")
         }

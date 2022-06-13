@@ -9,7 +9,7 @@ from . import interaction
 from . import player
 from . import rendering
 from . import config
-import os
+from . import translation as tr
 
 
 class Game():
@@ -139,8 +139,9 @@ class Game():
         while True:
             self.window.fill(self.GRAY)
             self.draw_text(
-                f'Your score is {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
-                config.HEIGHT // 2 - config.HEIGHT // 10, display=self.window)
+                f'{tr.tr("Final score")} {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
+                config.HEIGHT // 2 - config.HEIGHT // 10,
+                display=self.window)
             pygame.display.flip()
             if pygame.event.peek(pygame.QUIT):
                 return
@@ -189,7 +190,6 @@ class Game():
         self.UP_KEY, self.DOWN_KEY, self.START_KEY = False, False, False
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
         self.ESC_KEY = False
-
 
     def draw_text(self, text, size, x, y, display=None):
         """Draw text onto surface."""

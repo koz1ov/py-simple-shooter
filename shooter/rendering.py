@@ -6,6 +6,7 @@ import os
 from . import config as cfg
 from . import player
 from . import sprites
+from . import translation as tr
 
 
 @functools.lru_cache(maxsize=100)
@@ -182,7 +183,7 @@ class Rendering:
 
     def _render_score(self):
         """Render score."""
-        self._game.draw_text(f"Score: {self._game.score}", cfg.HEIGHT // 20,
+        self._game.draw_text(f"{tr.tr('Score')}: {self._game.score}", cfg.HEIGHT // 20,
                              cfg.WIDTH // 10, cfg.HEIGHT // 10, display=self._sc)
 
     def _render_time_left(self):

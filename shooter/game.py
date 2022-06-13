@@ -41,6 +41,7 @@ class Game():
         self.rendering = rendering.Rendering(self)
         self.interaction = interaction.Interaction(self)
         self.score = 0
+        self.total_time_elapsed = 0
 
     def save_game(self):
         vol = self.options.options_values["Volume"][0]
@@ -50,6 +51,18 @@ class Game():
         self.settings.data.music = music
         self.settings.data.language = lang
         self.settings.save()
+
+    def display_final_result(self):
+        while True:
+            self.window.fill(self.GRAY)
+            self.draw_text(
+                f'Your score is {self.score}', config.HEIGHT // 10,
+                                               config.WIDTH // 2,
+                                               config.HEIGHT // 2 - config.HEIGHT // 10,
+                display=self.window)
+            pygame.display.flip()
+            if pygame.event.peek(pygame.QUIT):
+                return
 
     def game_loop(self):
         while self.running:
@@ -61,6 +74,11 @@ class Game():
             while self.playing:
                 visible_sprites = self.rendering.render(self.player, self.sprites.sprites)
                 self.playing = self.interaction.handle_events(self.player, visible_sprites)
+                if self.total_time_elapsed > config.GAME_MAX_DURATION:
+                    self.running = self.playing = False
+
+        if self.total_time_elapsed > config.GAME_MAX_DURATION:
+            self.display_final_result()
 
     def check_events(self):
         for event in pygame.event.get():

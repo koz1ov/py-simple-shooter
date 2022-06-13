@@ -37,6 +37,7 @@ class Rendering:
         self._debug_fps()
         self._render_weapon()
         self._render_score()
+        self._render_time_left()
         pg.display.flip()
         return visible_sprites
         # TODO: render floor and ceiling
@@ -180,6 +181,12 @@ class Rendering:
         """Render score."""
         self._game.draw_text(f"Score: {self._game.score}", cfg.HEIGHT // 20,
                              cfg.WIDTH // 10, cfg.HEIGHT // 10, display=self._sc)
+
+    def _render_time_left(self):
+        """Render time until the end of the game."""
+        time_left = (cfg.GAME_MAX_DURATION - self._game.total_time_elapsed) // 1000
+        self._game.draw_text(f"{time_left}", cfg.HEIGHT // 20,
+                             cfg.WIDTH // 2, cfg.HEIGHT // 10, display=self._sc)
 
     def _debug_fps(self):
         pass

@@ -69,14 +69,14 @@ class Rendering:
         """Load the texture images from files and save its dimensions."""
         path_to_pics = os.path.dirname(__file__)
         self._textures = {
-            1: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            2: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            3: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            4: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            5: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            6: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            7: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            8: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            1: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            2: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            3: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            4: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            5: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            6: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            7: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            8: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
             'weapon': pg.image.load(path_to_pics + '/pics/weapon.png').convert_alpha(),
         }
         self._textures['weapon'] = pg.transform.scale(self._textures['weapon'],
@@ -194,4 +194,4 @@ class Rendering:
 
     def _debug_fps(self):
         pass
-        # print(self._clock.get_fps())
+        # print(self._game.clock.get_fps())

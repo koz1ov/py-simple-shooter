@@ -9,7 +9,7 @@ from . import interaction
 from . import player
 from . import rendering
 from . import config
-from . import translation as tr
+global _
 
 
 class Game():
@@ -138,8 +138,9 @@ class Game():
         """Show the final result of the game."""
         while True:
             self.window.fill(self.GRAY)
+            final_score_tr = _("Final score")
             self.draw_text(
-                f'{tr.tr("Final score")} {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
+                f'{final_score_tr} {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
                 config.HEIGHT // 2 - config.HEIGHT // 10,
                 display=self.window)
             pygame.display.flip()

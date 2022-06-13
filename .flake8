@@ -1,3 +1,4 @@
 [flake8]
 exclude = venv, .git
 max-line-length = 100
+builtins = _

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2022-06-11 13:24+0300\n"
+"POT-Creation-Date: 2022-06-14 02:35+0300\n"
 "PO-Revision-Date: 2022-06-11 13:24+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,67 +19,65 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.10.1\n"
 
-#: shooter/menu/menu.py:42
+#: shooter/game.py:141
+msgid "Final score"
+msgstr "Ваш счет"
+
+#: shooter/rendering.py:186
+msgid "Score"
+msgstr "Счет"
+
+#: shooter/menu/menu.py:75
 msgid "Menu"
 msgstr "Меню"
 
-#: shooter/menu/menu.py:44 shooter/menu/menu.py:108
+#: shooter/menu/menu.py:77 shooter/menu/menu.py:146
 msgid "Start Game"
 msgstr "Играть"
 
-#: shooter/menu/menu.py:45 shooter/menu/menu.py:109 shooter/menu/menu.py:117
-#: shooter/menu/menu.py:210
+#: shooter/menu/menu.py:78 shooter/menu/menu.py:147 shooter/menu/menu.py:178
+#: shooter/menu/menu.py:275
 msgid "Options"
 msgstr "Настройки"
 
-#: shooter/menu/menu.py:46 shooter/menu/menu.py:110 shooter/menu/menu.py:231
-#: shooter/menu/menu.py:270
+#: shooter/menu/menu.py:79 shooter/menu/menu.py:148 shooter/menu/menu.py:317
+#: shooter/menu/menu.py:358
 msgid "Credits"
 msgstr "Информация"
 
-#: shooter/menu/menu.py:106
+#: shooter/menu/menu.py:142 shooter/menu/menu.py:144
 msgid "Main Menu"
 msgstr "Меню"
 
-#: shooter/menu/menu.py:119 shooter/menu/menu.py:212
+#: shooter/menu/menu.py:180 shooter/menu/menu.py:277
 msgid "Volume"
 msgstr "Громкость"
 
-#: shooter/menu/menu.py:120 shooter/menu/menu.py:213
+#: shooter/menu/menu.py:181 shooter/menu/menu.py:278
 msgid "Language"
 msgstr "Язык"
 
-#: shooter/menu/menu.py:121 shooter/menu/menu.py:214
+#: shooter/menu/menu.py:182 shooter/menu/menu.py:279
 msgid "Music"
 msgstr "Музыка"
 
-#: shooter/menu/menu.py:125 shooter/menu/menu.py:219
+#: shooter/menu/menu.py:186 shooter/menu/menu.py:284
 msgid "ru"
 msgstr "рус"
 
-#: shooter/menu/menu.py:125 shooter/menu/menu.py:219
+#: shooter/menu/menu.py:186 shooter/menu/menu.py:284
 msgid "en"
 msgstr "англ"
 
-#: shooter/menu/menu.py:127 shooter/menu/menu.py:222
+#: shooter/menu/menu.py:188 shooter/menu/menu.py:287
 msgid "Yes"
 msgstr "Да"
 
-#: shooter/menu/menu.py:127 shooter/menu/menu.py:222
+#: shooter/menu/menu.py:188 shooter/menu/menu.py:287
 msgid "No"
 msgstr "Нет"
 
-#: shooter/menu/menu.py:127 shooter/menu/menu.py:222
-msgid "Random"
-msgstr "Случайно"
-
-#: shooter/menu/menu.py:233 shooter/menu/menu.py:272
+#: shooter/menu/menu.py:319 shooter/menu/menu.py:360
 msgid "Maked by Sasha and Petya"
 msgstr "Сделано Сашей и Петей"
-
-msgid "Score"
-msgstr "Cчет"
-
-msgid "Final score"
-msgstr "Твой счет"
 

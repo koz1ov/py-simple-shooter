@@ -1,4 +1,5 @@
 import pygame
+import os
 from . import sprites
 from .settings import Settings
 from pydantic import ValidationError
@@ -42,6 +43,27 @@ class Game():
         self.interaction = interaction.Interaction(self)
         self.score = 0
         self.total_time_elapsed = 0
+        self.play_music()
+        self.update_settings()
+
+    def update_settings(self):
+        """Set parameters according to menu settings."""
+        vol = self.options.options_values["Volume"][0]
+        music = self.options.options_values["Music"][0]
+        if music:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
+        pygame.mixer.music.set_volume(vol * 0.25)
+        self.interaction.shot_sound.set_volume(vol * 0.25)
+
+    def play_music(self):
+        """Play music."""
+        path_to_music = os.path.join(os.path.dirname(__file__), 'audio/music.mp3')
+        pygame.mixer.init()
+        pygame.mixer.music.load(path_to_music)
+        pygame.mixer.music.set_volume(self.settings.data.volume * 0.2)
+        pygame.mixer.music.play(-1)
 
     def save_game(self):
         vol = self.options.options_values["Volume"][0]
@@ -53,13 +75,12 @@ class Game():
         self.settings.save()
 
     def display_final_result(self):
+        """Show the final result of the game."""
         while True:
             self.window.fill(self.GRAY)
             self.draw_text(
-                f'Your score is {self.score}', config.HEIGHT // 10,
-                                               config.WIDTH // 2,
-                                               config.HEIGHT // 2 - config.HEIGHT // 10,
-                display=self.window)
+                f'Your score is {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
+                config.HEIGHT // 2 - config.HEIGHT // 10, display=self.window)
             pygame.display.flip()
             if pygame.event.peek(pygame.QUIT):
                 return

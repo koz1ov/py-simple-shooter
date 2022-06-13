@@ -1,6 +1,7 @@
 """Define an Interaction class for event handling."""
-from . import config as cfg
 import pygame as pg
+import os
+from . import config as cfg
 from . import player
 from . import sprites
 
@@ -24,6 +25,11 @@ class Interaction:
         self.game = game
         self._was_stopped = True
         self._last_shot_time = pg.time.get_ticks()
+        self._load_shot_sound()
+
+    def _load_shot_sound(self):
+        path_to_shot = os.path.join(os.path.dirname(__file__), 'audio/shot.mp3')
+        self.shot_sound = pg.mixer.Sound(path_to_shot)
 
     def handle_events(self, player: player.Player, visible_sprites: list[sprites.Sprite]) -> bool:
         """Process keyboard events and change the world state."""
@@ -61,6 +67,7 @@ class Interaction:
 
     def _shot(self, player: player.Player, visible_sprites: list[sprites.Sprite]):
         """Make a shot and kill sprites."""
+        self.shot_sound.play()
         for sprite in visible_sprites:
 
             sprite_points = [

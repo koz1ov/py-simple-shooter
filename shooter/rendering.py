@@ -30,7 +30,7 @@ class Rendering:
 
     def render(self, player: player.Player, sprites_list) -> list[sprites.Sprite]:
         """Render an image on the screen."""
-        self._sc.fill((255, 0, 0))
+        self._sc.fill((0, 30, 22))
         self._render_walls(player.pos, player.dir, player.plane)
         visible_sprites = self._render_sprites(player.pos, player.dir, player.plane, sprites_list)
         self._draw_minimap(player.pos)

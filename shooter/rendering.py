@@ -157,5 +157,5 @@ class Rendering:
                               area=(start, 0, xs[-1] - xs[0], size_on_screen))
 
     def _debug_fps(self):
-
-        print(self._clock.get_fps())
+        pass
+        # print(self._clock.get_fps())

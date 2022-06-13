@@ -40,6 +40,7 @@ class Game():
         self.sprites = sprites.Sprites()
         self.rendering = rendering.Rendering(self)
         self.interaction = interaction.Interaction(self)
+        self.score = 0
 
     def save_game(self):
         vol = self.options.options_values["Volume"][0]
@@ -87,9 +88,12 @@ class Game():
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
         self.ESC_KEY = False
 
-    def draw_text(self, text, size, x, y):
+    def draw_text(self, text, size, x, y, display=None):
         font = pygame.font.Font(self.font_name, size)
         text_surface = font.render(text, True, self.BLACK)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
-        self.display.blit(text_surface, text_rect)
+        if display is None:
+            self.display.blit(text_surface, text_rect)
+        else:
+            display.blit(text_surface, text_rect)

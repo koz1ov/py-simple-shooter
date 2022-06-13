@@ -92,7 +92,7 @@ class MainMenu(Menu):
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
         self.cursor_rect.midtop = (
-            self.mid_w // 2, self.mid_h + self.size_header_element)
+            self.mid_w // 4, self.mid_h + self.size_header_element)
 
     def display_menu(self):
         """Main menu loop with all pypeline."""
@@ -119,14 +119,14 @@ class MainMenu(Menu):
         if self.game.DOWN_KEY:
             self.state += 1
             self.state = self.state % len(self.keys)
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
         elif self.game.UP_KEY:
             self.state = ((len(self.keys) - 1)
                           if self.state == 0
                           else (self.state - 1))
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
 
@@ -197,7 +197,7 @@ class OptionsMenu(Menu):
         self.state = 0
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
-        self.cursor_rect.midtop = (self.mid_w // 2,
+        self.cursor_rect.midtop = (self.mid_w // 4,
                                    self.mid_h + self.size_header_element)
 
     def display_menu(self):
@@ -229,14 +229,14 @@ class OptionsMenu(Menu):
         if self.game.DOWN_KEY:
             self.state += 1
             self.state = self.state % len(self.keys)
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
         elif self.game.UP_KEY:
             self.state = ((len(self.keys) - 1)
                           if self.state == 0
                           else (self.state - 1))
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
 
@@ -326,7 +326,7 @@ class CreditsMenu(Menu):
         self.state = 0
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
-        self.cursor_rect.midtop = (self.mid_w // 2,
+        self.cursor_rect.midtop = (self.mid_w // 4,
                                    self.mid_h + self.size_header_element)
 
     def display_menu(self):

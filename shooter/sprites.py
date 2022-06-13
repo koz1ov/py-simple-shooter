@@ -10,6 +10,10 @@ class Sprite:
         """Init sprite state."""
         self.pos = pg.math.Vector2(pos_x, pos_y)
         self.texture: pg.image = Sprites.textures[tex_name]
+        self.is_dead = False
+
+    def die(self):
+        self.is_dead = True
 
 
 class Sprites:

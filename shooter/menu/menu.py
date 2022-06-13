@@ -190,8 +190,8 @@ class OptionsMenu(Menu):
         self.options_values = {
             "Volume": [0, range(5), range(5)],
             "Language": [0, ["ru", "en"], [_("ru"), _("en")]],
-            "Music": [0, ["Yes", "No", "Random"],
-                      [_("Yes"), _("No"), _("Random")]]
+            "Music": [0, ["Yes", "No"],
+                      [_("Yes"), _("No")]]
         }
         self.keys = list(self.options_options.keys())
         self.font_height_regular = self.game.DISPLAY_H // (4 * len(self.keys))
@@ -290,8 +290,8 @@ class OptionsMenu(Menu):
             "Language": [self.options_values["Language"][0],
                          ["ru", "en"], [_("ru"), _("en")]],
             "Music": [self.options_values["Music"][0],
-                        ["Yes", "No", "Random"],
-                        [_("Yes"), _("No"), _("Random")]]
+                        ["Yes", "No"],
+                        [_("Yes"), _("No")]]
         }
         self.game.main_menu.update_translation()
         self.game.credits.update_translation()

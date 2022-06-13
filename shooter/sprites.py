@@ -5,7 +5,13 @@ import os
 
 
 class Sprite:
-    """The class that describes sprite."""
+    """The class that describes sprite.
+
+    :param pos: position of texture
+    :type pos: :class:`pygame.math.Vector2`
+    :param texture: texture image
+    :type texture: :class:`pygame.image`
+    """
 
     def __init__(self, pos_x, pos_y, tex_name):
         """Init sprite state."""

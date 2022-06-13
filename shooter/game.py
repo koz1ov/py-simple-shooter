@@ -14,33 +14,59 @@ import os
 class Game():
     """Class that manages the whole game: menu and exact shooter part.
 
-    Attributes:
-        settings: parameters of menu, which loaded from file
-        running: indicator of main game loop, uses for displaying menu
-        playing: indicator of shooter game loop, uses for displaying shooter part
-        UP_KEY: up-key press indicator
-        DOWN_KEY: down-key press indicator
-        START_KEY: enter-key press indicator
-        BACK_KEY: back-key press indicator
-        LEFT_KEY: left-key press indicator
-        RIGHT_KEY: right-key press indicator
-        ESC_KEY: escape-key press indicator
-        DISPLAY_W: display width which are imported from config.py
-        DISPLAY_H: display height which are imported from config.py
-        display = pygame object for representing images
-        window: displaying Surface
-        BLACK: RGB black color
-        WHITE: RGB white color
-        GRAY: RGB gray color
-        main_menu:  main menu object
-        options: options menu object
-        credits: credits menu objects
-        current_menu: variable of with current displayed menu
-        clock: pygame.clock which used for shooter part
-        player: current player state
-        sprites: variable that controls the state of the sprites
-        rendering: variable that controls the rendering of the image on the screen
-        interaction: checker of keyboard events and change the world state
+
+        :param settings: parameters of menu, which loaded from file
+        :type settings: :class:`shooter.settings.Settings`
+        :param running: indicator of main game loop, uses for displaying menu
+        :type running: :class:`Bool`
+        :param playing: indicator of shooter game loop, uses for displaying shooter part
+        :type playing: :class:`Bool`
+        :param UP_KEY: up-key press indicator
+        :type UP_KEY: :class:`Bool`
+        :param DOWN_KEY: down-key press indicator
+        :type DOWN_KEY: :class:`Bool`
+        :param START_KEY: enter-key press indicator
+        :type START_KEY: :class:`Bool`
+        :param BACK_KEY: back-key press indicator
+        :type BACK_KEY: :class:`Bool`
+        :param LEFT_KEY: left-key press indicator
+        :type LEFT_KEY: :class:`Bool`
+        :param RIGHT_KEY: right-key press indicator
+        :type RIGHT_KEY: :class:`Bool`
+        :param ESC_KEY: escape-key press indicator
+        :type ESC_KEY: :class:`Bool`
+        :param DISPLAY_W: display width which are imported from config.py
+        :type DISPLAY_W: :class:`int`
+        :param DISPLAY_H: display height which are imported from config.py
+        :type DISPLAY_H: :class:`int`
+        :param display: pygame object for representing images
+        :type display: :class:`pygame.Surface`
+        :param window: displaying Surface
+        :type window: :class:`pygame.Surface`
+        :param BLACK: RGB black color
+        :type BLACK: :class:`Tuple`
+        :param WHITE: RGB white color
+        :type WHITE: :class:`Tuple`
+        :param GRAY: RGB gray color
+        :type GRAY: :class:`Tuple`
+        :param main_menu:  main menu object
+        :type main_menu: :class:`shooter.menu.MainMenu`
+        :param options: options menu object
+        :type options: :class:`shooter.menu.OptionsMenu`
+        :param credits: credits menu objects
+        :type credits: :class:`shooter.menu.CreditsMenu`
+        :param current_menu: variable of with current displayed menu
+        :type current_menu: :class:`shooter.menu.Menu`
+        :param clock: pygame.clock which used for shooter part
+        :type clock: :class:`pygame.time.Clock`
+        :param player: current player state
+        :type player: :class:`shooter.player.Player`
+        :param sprites: variable that controls the state of the sprites
+        :type sprites: :class:`shooter.sprites.Sprites`
+        :param rendering: variable that controls the rendering of the image on the screen
+        :type rendering: :class:`shooter.rendering.Rendering`
+        :param interaction: checker of keyboard events and change the world state
+        :type interactions: :class:`shooter.interaction.Interaction`
     """
 
     def __init__(self, settings: Settings):

@@ -1,6 +1,6 @@
 Menu
 ====
 
-.. automodule:: shooter.menu
+.. automodule:: shooter.menu.menu
    :members:
    :undoc-members:

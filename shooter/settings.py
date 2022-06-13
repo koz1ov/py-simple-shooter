@@ -14,13 +14,15 @@ class SettingsData(BaseModel):
 class Settings():
     """Class handler, which accumulate settings data and save this data to file.
 
-    Attributes:
-        path: path to settings-json-file
-        data: serialized data for json
+    :param path: path to settings-json-file
+    :type path: :class:`string`
+    :param data: serialized data for json
+    :type data: :class:`shooter.settings.SettingsData`
+
     """
 
     def __init__(self, path: str = path_to_menu + "/menu/settings.json") -> None:
-        """Init data: read settings-json-file and keep itself."""
+        """Init data: read settings-json-file and keep it."""
         self.path = path
         file = open(self.path, "r")
         setting_string = file.read()

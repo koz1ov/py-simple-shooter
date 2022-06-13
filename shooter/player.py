@@ -9,10 +9,13 @@ import itertools
 class Player:
     """Class that manages the player state.
 
-    Attributes:
-        _dir: the direction the player is facing
-        _pos: player's position on the game map
-        _plane: a vector representing the plane that the rays are casting on
+
+    :param _dir: the direction the player is facing
+    :param _pos: player's position on the game map
+    :param _plane: a vector representing the plane that the rays are casting on
+    :type _dir: :class:`pygame.math.Vector2`
+    :type _pos: :class:`pygame.math.Vector2`
+    :type _plane: :class:`pygame.math.Vector2`
     """
 
     def __init__(self):

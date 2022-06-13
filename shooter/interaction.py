@@ -22,7 +22,7 @@ class Interaction:
     def __init__(self, game: 'Game'):  # noqa: F821
         """Initialise the clock object for time tracking."""
         self.game = game
-        self._was_stopped = False
+        self._was_stopped = True
         self._last_shot_time = pg.time.get_ticks()
 
     def handle_events(self, player: player.Player, visible_sprites: list[sprites.Sprite]) -> bool:
@@ -32,6 +32,7 @@ class Interaction:
             self._was_stopped = False
             return True
 
+        self.game.total_time_elapsed += elapsed
         keys = pg.key.get_pressed()
         if keys[pg.K_UP]:
             player.move(elapsed * cfg.MOVE_SPEED)

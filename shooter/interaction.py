@@ -32,7 +32,9 @@ def _shot(player: player.Player, visible_sprites: list[sprites.Sprite]):
                                  pg.math.Vector2(sprite_points[i]),
                                  pg.math.Vector2(sprite_points[i - 1])):
                 sprite.die()
-                return
+                return True
+
+    return False
 
 
 class Interaction:
@@ -40,6 +42,7 @@ class Interaction:
 
     def __init__(self, game: 'Game'):  # noqa: F821
         """Initialise the clock object for time tracking."""
+        self.sprites = game.sprites
         self._clock = game.clock
         self._last_shot_time = pg.time.get_ticks()
 
@@ -62,7 +65,8 @@ class Interaction:
             now = pg.time.get_ticks()
             if now - self._last_shot_time > cfg.SHOT_DELAY_MSEC:
                 self._last_shot_time = now
-                _shot(player, visible_sprites)
+                if _shot(player, visible_sprites):
+                    self.sprites.gen_new_sprite()
         for sprite in visible_sprites:
             rel_pos = player.pos - sprite.pos
             if rel_pos.length() < 1:

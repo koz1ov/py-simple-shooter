@@ -1,4 +1,5 @@
 """Define the classes for sprite managing."""
+
 import pygame as pg
 import os
 

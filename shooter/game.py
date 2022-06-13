@@ -1,3 +1,4 @@
+"""Define a Game class that make how the game works and connects the shooter part and the menu."""
 import pygame
 from . import sprites
 from .settings import Settings
@@ -7,10 +8,43 @@ from . import interaction
 from . import player
 from . import rendering
 from . import config
+import os
 
 
 class Game():
+    """Class that manages the whole game: menu and exact shooter part.
+
+    Attributes:
+        settings: parameters of menu, which loaded from file
+        running: indicator of main game loop, uses for displaying menu
+        playing: indicator of shooter game loop, uses for displaying shooter part
+        UP_KEY: up-key press indicator
+        DOWN_KEY: down-key press indicator
+        START_KEY: enter-key press indicator
+        BACK_KEY: back-key press indicator
+        LEFT_KEY: left-key press indicator
+        RIGHT_KEY: right-key press indicator
+        ESC_KEY: escape-key press indicator
+        DISPLAY_W: display width which are imported from config.py
+        DISPLAY_H: display height which are imported from config.py
+        display = pygame object for representing images
+        window: displaying Surface
+        BLACK: RGB black color
+        WHITE: RGB white color
+        GRAY: RGB gray color
+        main_menu:  main menu object
+        options: options menu object
+        credits: credits menu objects
+        current_menu: variable of with current displayed menu
+        clock: pygame.clock which used for shooter part
+        player: current player state
+        sprites: variable that controls the state of the sprites
+        rendering: variable that controls the rendering of the image on the screen
+        interaction: checker of keyboard events and change the world state
+    """
+
     def __init__(self, settings: Settings):
+        """Initialise pygame and required parameters for displaying menu and game."""
         pygame.init()
         self.settings = settings
         self.running, self.playing = True, False
@@ -20,7 +54,7 @@ class Game():
         self.DISPLAY_W, self.DISPLAY_H = config.WIDTH, config.HEIGHT
         self.display = pygame.Surface((self.DISPLAY_W, self.DISPLAY_H))
         self.window = pygame.display.set_mode((self.DISPLAY_W, self.DISPLAY_H))
-        path_to_font = "/".join(str(__file__).split("/")[:-1]) + "/fonts/comic2.ttf"
+        path_to_font = os.path.dirname(__file__) + "/fonts/comic2.ttf"
         self.font_name = path_to_font
         self.BLACK = (0, 0, 0)
         self.WHITE = (255, 255, 255)
@@ -42,6 +76,7 @@ class Game():
         self.interaction = interaction.Interaction(self)
 
     def save_game(self):
+        """Save game settings into file using json."""
         vol = self.options.options_values["Volume"][0]
         music = self.options.options_values["Music"][0]
         lang = self.options.options_values["Language"][0]
@@ -51,6 +86,8 @@ class Game():
         self.settings.save()
 
     def game_loop(self):
+        """Main game loop of game objects,
+        which contains two loops: menu and menu + game, respectively."""
         while self.running:
             self.current_menu.display_menu()
             try:
@@ -62,6 +99,7 @@ class Game():
                 self.rendering.render(self.player, self.sprites.sprites)
 
     def check_events(self):
+        """Process keyboard events and change key indicators."""
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running, self.playing = False, False
@@ -83,11 +121,13 @@ class Game():
                     self.ESC_KEY = True
 
     def reset_keys(self):
+        """Reset key indicators."""
         self.UP_KEY, self.DOWN_KEY, self.START_KEY = False, False, False
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
         self.ESC_KEY = False
 
     def draw_text(self, text, size, x, y):
+        """Draw text onto surface."""
         font = pygame.font.Font(self.font_name, size)
         text_surface = font.render(text, True, self.BLACK)
         text_rect = text_surface.get_rect()

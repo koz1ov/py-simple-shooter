@@ -1,3 +1,4 @@
+"""Define some menu classes."""
 import pygame as pg
 import gettext
 import os
@@ -11,12 +12,22 @@ _ = ru.gettext
 
 
 class Menu():
-    def __init__(self, game):
+    """Base class, which inhereted by others menu classes.
+
+    Attributes:
+        game: Game object
+        mid_w: middle of width
+        mid_h: middle of height
+        run_display: indicator of running current menu for menu loop
+        cursor_height: height of cursor rectangle
+        cursor_rect: cursor rectangle
+    """
+    def __init__(self, game: 'Game'):  # noqa: F821
+        """Initialize all parameters with setting translation function."""
         self.game = game
         self.mid_w, self. mid_h = (self.game.DISPLAY_W / 2,
                                    self.game.DISPLAY_H / 2)
         self.run_display = True
-        self.offset = -100
         self.cursor_height = 15
         self.cursor_rect = pg.Rect(
             0, 0, self.cursor_height, self.cursor_height)
@@ -27,16 +38,28 @@ class Menu():
             _ = en.gettext
 
     def draw_cursor(self):
+        """Draw cursor using draw text."""
         self.game.draw_text(
             '*', self.cursor_height, self.cursor_rect.x, self.cursor_rect.y)
 
     def blit_screen(self):
+        """Reset display for redrawing."""
         self.game.window.blit(self.game.display, (0, 0))
         pg.display.update()
         self.game.reset_keys()
 
 
 class MainMenu(Menu):
+    """Main menu of all menu pypline.
+
+    Attributes:
+        game: Game object
+        mid_w: middle of width
+        mid_h: middle of height
+        run_display: indicator of running current menu for menu loop
+        cursor_height: height of cursor rectangle
+        cursor_rect: cursor rectangle
+    """
     def __init__(self, game):
         Menu.__init__(self, game)
         self.header = _("Menu"), "Menu"

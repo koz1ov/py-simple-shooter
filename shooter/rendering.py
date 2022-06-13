@@ -35,6 +35,7 @@ class Rendering:
         visible_sprites = self._render_sprites(player.pos, player.dir, player.plane, sprites_list)
         self._draw_minimap(player.pos)
         self._debug_fps()
+        self._render_weapon()
         pg.display.flip()
         return visible_sprites
         # TODO: render floor and ceiling
@@ -69,8 +70,11 @@ class Rendering:
             5: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
             6: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
             7: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            8: pg.image.load(path_to_pics + '/pics/wood.png').convert()
+            8: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            'weapon': pg.image.load(path_to_pics + '/pics/weapon.png').convert_alpha(),
         }
+        self._textures['weapon'] = pg.transform.scale(self._textures['weapon'],
+                                                      (cfg.WIDTH * 0.9, cfg.HEIGHT * 0.7))
         self.tex_width = self._textures[1].get_width()
         self.tex_height = self._textures[1].get_height()
 
@@ -160,6 +164,13 @@ class Rendering:
                           area=(start, 0, xs[-1] - xs[0], size_on_screen))
 
         return visible_sprites
+
+    def _render_weapon(self):
+        """Render weapon on the screen."""
+        tex_weapon = self._textures['weapon']
+        weapon_pos = (cfg.WIDTH // 2 - tex_weapon.get_width() // 2 + cfg.WIDTH * 0.1,
+                      cfg.HEIGHT - tex_weapon.get_height())
+        self._sc.blit(tex_weapon, weapon_pos)
 
     def _debug_fps(self):
         pass

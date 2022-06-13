@@ -1,5 +1,6 @@
 """Define a Game class that make how the game works and connects the shooter part and the menu."""
 import pygame
+import os
 from . import sprites
 from .settings import Settings
 from pydantic import ValidationError
@@ -99,6 +100,29 @@ class Game():
         self.sprites = sprites.Sprites()
         self.rendering = rendering.Rendering(self)
         self.interaction = interaction.Interaction(self)
+        self.score = 0
+        self.total_time_elapsed = 0
+        self.play_music()
+        self.update_settings()
+
+    def update_settings(self):
+        """Set parameters according to menu settings."""
+        vol = self.options.options_values["Volume"][0]
+        music = self.options.options_values["Music"][0]
+        if music:
+            pygame.mixer.music.pause()
+        else:
+            pygame.mixer.music.unpause()
+        pygame.mixer.music.set_volume(vol * 0.25)
+        self.interaction.shot_sound.set_volume(vol * 0.25)
+
+    def play_music(self):
+        """Play music."""
+        path_to_music = os.path.join(os.path.dirname(__file__), 'audio/music.mp3')
+        pygame.mixer.init()
+        pygame.mixer.music.load(path_to_music)
+        pygame.mixer.music.set_volume(self.settings.data.volume * 0.2)
+        pygame.mixer.music.play(-1)
 
     def save_game(self):
         """Save game settings into file using json."""
@@ -110,6 +134,17 @@ class Game():
         self.settings.data.language = lang
         self.settings.save()
 
+    def display_final_result(self):
+        """Show the final result of the game."""
+        while True:
+            self.window.fill(self.GRAY)
+            self.draw_text(
+                f'Your score is {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
+                config.HEIGHT // 2 - config.HEIGHT // 10, display=self.window)
+            pygame.display.flip()
+            if pygame.event.peek(pygame.QUIT):
+                return
+
     def game_loop(self):
         """Start game loop of game object."""
         while self.running:
@@ -119,8 +154,13 @@ class Game():
             except ValidationError as e:
                 print(e.json())
             while self.playing:
-                self.playing = self.interaction.handle_events(self.player)
-                self.rendering.render(self.player, self.sprites.sprites)
+                visible_sprites = self.rendering.render(self.player, self.sprites.sprites)
+                self.playing = self.interaction.handle_events(self.player, visible_sprites)
+                if self.total_time_elapsed > config.GAME_MAX_DURATION:
+                    self.running = self.playing = False
+
+        if self.total_time_elapsed > config.GAME_MAX_DURATION:
+            self.display_final_result()
 
     def check_events(self):
         """Process keyboard events and change key indicators."""
@@ -150,10 +190,14 @@ class Game():
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
         self.ESC_KEY = False
 
-    def draw_text(self, text, size, x, y):
+
+    def draw_text(self, text, size, x, y, display=None):
         """Draw text onto surface."""
         font = pygame.font.Font(self.font_name, size)
         text_surface = font.render(text, True, self.BLACK)
         text_rect = text_surface.get_rect()
         text_rect.center = (x, y)
-        self.display.blit(text_surface, text_rect)
+        if display is None:
+            self.display.blit(text_surface, text_rect)
+        else:
+            display.blit(text_surface, text_rect)

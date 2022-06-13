@@ -270,6 +270,8 @@ class OptionsMenu(Menu):
                 language = self.options_values[key][1][index]
                 self.update_translation(language)
 
+        self.game.update_settings()
+
     def update_translation(self, language):
         """Change transaltion on fly."""
         global _

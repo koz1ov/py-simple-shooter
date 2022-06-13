@@ -136,6 +136,9 @@ class Rendering:
                           reverse=True)
         visible_sprites = []
         for sprite in sprites_list:
+            if sprite.is_dead:
+                continue
+
             rel_pos = sprite.pos - player_pos
             inv_det = 1 / (plane_vec.x * player_dir.y - player_dir.x * plane_vec.y)
 

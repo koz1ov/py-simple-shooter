@@ -45,5 +45,9 @@ ROTATE_SPEED = 0.1
 
 WALL_RENDER_SCALE = 5
 
+SHOT_DELAY_MSEC = 1000
+
+SPRITE_SIZE = 0.5
+
 assert WIDTH % len(MAP[0]) == 0
 assert HEIGHT % len(MAP) == 0

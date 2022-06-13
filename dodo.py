@@ -1,3 +1,4 @@
+"""Automatization of work pypeline."""
 import glob
 from doit.tools import create_folder
 from functools import partial
@@ -95,7 +96,7 @@ def task_wheel():
 
 
 def task_html_documentation():
-    """Generate html documentation using sphinx"""
+    """Generate html documentation using sphinx."""
     build_dir = 'docs/_build'
     clean_build = partial(shutil.rmtree, build_dir, ignore_errors=True)
     return {

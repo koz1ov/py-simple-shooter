@@ -9,7 +9,6 @@ import itertools
 class Player:
     """Class that manages the player state.
 
-
     :param _dir: the direction the player is facing
     :param _pos: player's position on the game map
     :param _plane: a vector representing the plane that the rays are casting on

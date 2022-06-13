@@ -15,19 +15,20 @@ _ = ru.gettext
 class Menu():
     """Base class, which inhereted by others menu classes.
 
-        :param game: :class:`shooter.game.Game`
-        :type game: :class:`shooter.game.Game`
-        :param mid_w: middle of width
-        :type min_w: :class:`int`
-        :param mid_h: middle of height
-        :type mid_h: :class:`int`
-        :param run_display: indicator of running current menu for menu loop
-        :type run_display: :class:`Bool`
-        :param cursor_height: height of cursor rectangle
-        :type cursor_height: :class:`int`
-        :param cursor_rect: cursor rectangle
-        :type cursor_rect: :class:`pygame.Rect`
+    :param game: :class:`shooter.game.Game`
+    :type game: :class:`shooter.game.Game`
+    :param mid_w: middle of width
+    :type min_w: :class:`int`
+    :param mid_h: middle of height
+    :type mid_h: :class:`int`
+    :param run_display: indicator of running current menu for menu loop
+    :type run_display: :class:`Bool`
+    :param cursor_height: height of cursor rectangle
+    :type cursor_height: :class:`int`
+    :param cursor_rect: cursor rectangle
+    :type cursor_rect: :class:`pygame.Rect`
     """
+
     def __init__(self, game: 'Game'):  # noqa: F821
         """Initialize all parameters with setting translation function."""
         self.game = game
@@ -58,22 +59,22 @@ class Menu():
 class MainMenu(Menu):
     """Main menu of all menu pypline.
 
-        :param header: strings of localization and key header
-        :type header: :class:`Tuple`
-        :param menu_options: dictionary of menu options with localization
-        :type menu_options: :class:`dict`
-        :param keys: list of options, which are displyed on screen
-        :type keys: :class:`list`
-        :param font_height_regular: font height of regular menu options
-        :type font_height_regular: :class:`int`
-        :param font_height_header: font height of menu header
-        :type font_height_header: :class:`int`
-        :param state:  num of currently chosed options
-        :type state: :class:`int`
-        :param cursor_height: curor height
-        :type cursor_height: :class:`int`
-        :param size_header_element: font height of regular menu options
-        :type size_header_element: :class:`int`
+    :param header: strings of localization and key header
+    :type header: :class:`Tuple`
+    :param menu_options: dictionary of menu options with localization
+    :type menu_options: :class:`dict`
+    :param keys: list of options, which are displyed on screen
+    :type keys: :class:`list`
+    :param font_height_regular: font height of regular menu options
+    :type font_height_regular: :class:`int`
+    :param font_height_header: font height of menu header
+    :type font_height_header: :class:`int`
+    :param state:  num of currently chosed options
+    :type state: :class:`int`
+    :param cursor_height: curor height
+    :type cursor_height: :class:`int`
+    :param size_header_element: font height of regular menu options
+    :type size_header_element: :class:`int`
     """
 
     def __init__(self, game):
@@ -95,7 +96,7 @@ class MainMenu(Menu):
             self.mid_w // 4, self.mid_h + self.size_header_element)
 
     def display_menu(self):
-        """Main menu loop with all pypeline."""
+        """Start menu loop with all pypeline."""
         self.run_display = True
         while self.run_display:
             self.game.check_events()
@@ -131,7 +132,7 @@ class MainMenu(Menu):
                                        self.state * self.font_height_regular)
 
     def check_input(self):
-        """Check state and goes to another submenu"""
+        """Check state and goes to another submenu."""
         self.move_cursor()
         if self.game.START_KEY:
             if self.keys[self.state] == "Start":
@@ -145,7 +146,7 @@ class MainMenu(Menu):
             self.run_display = False
 
     def update_translation(self):
-        """Method for changing transaltion on fly"""
+        """Change transaltion on fly."""
         self.header = _("Main Menu"), "Main Menu"
         self.menu_options = {
             "Start": _("Start Game"),
@@ -157,25 +158,26 @@ class MainMenu(Menu):
 class OptionsMenu(Menu):
     """Options menu of all menu pypline.
 
-        :param header: strings of localization and key header
-        :type header: :class:`Tuple`
-        :param options_options: dictionary of menu options with localization
-        :type options_options: :class:`dict`
-        :param options_values: dictionary of values of menu options
-        :type options_values: :class:`dict`
-        :param keys: list of options, which are displyed on screen
-        :type keys: :class:`list`
-        :param font_height_regular: font height of regular menu options
-        :type font_height_regular: :class:`int`
-        :param font_height_header: font height of menu header
-        :type font_height_header: :class:`int`
-        :param state:  num of currently chosed options
-        :type state: :class:`int`
-        :param cursor_height: curor height
-        :type cursor_height: :class:`int`
-        :param size_header_element: font height of regular menu options
-        :type size_header_element: :class:`int`
+    :param header: strings of localization and key header
+    :type header: :class:`Tuple`
+    :param options_options: dictionary of menu options with localization
+    :type options_options: :class:`dict`
+    :param options_values: dictionary of values of menu options
+    :type options_values: :class:`dict`
+    :param keys: list of options, which are displyed on screen
+    :type keys: :class:`list`
+    :param font_height_regular: font height of regular menu options
+    :type font_height_regular: :class:`int`
+    :param font_height_header: font height of menu header
+    :type font_height_header: :class:`int`
+    :param state:  num of currently chosed options
+    :type state: :class:`int`
+    :param cursor_height: curor height
+    :type cursor_height: :class:`int`
+    :param size_header_element: font height of regular menu options
+    :type size_header_element: :class:`int`
     """
+
     def __init__(self, game):
         """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
@@ -241,7 +243,7 @@ class OptionsMenu(Menu):
                                        self.state * self.font_height_regular)
 
     def check_input(self):
-        """Check state and change options values"""
+        """Check state and change options values."""
         self.move_cursor()
         if self.game.BACK_KEY:
             self.game.current_menu = self.game.main_menu
@@ -269,7 +271,7 @@ class OptionsMenu(Menu):
                 self.update_translation(language)
 
     def update_translation(self, language):
-        """Method for changing transaltion on fly"""
+        """Change transaltion on fly."""
         global _
         if language == "en":
             _ = en.gettext
@@ -296,23 +298,24 @@ class OptionsMenu(Menu):
 class CreditsMenu(Menu):
     """Credits menu of all menu pypline.
 
-        :param header: strings of localization and key header
-        :type header: :class:`Tuple`
-        :param menu_options: dictionary of menu options with localization
-        :type menu_options: :class:`dict`
-        :param keys: list of options, which are displyed on screen
-        :type keys: :class:`list`
-        :param font_height_regular: font height of regular menu options
-        :type font_height_regular: :class:`int`
-        :param font_height_header: font height of menu header
-        :type font_height_header: :class:`int`
-        :param state:  num of currently chosed options
-        :type state: :class:`int`
-        :param cursor_height: curor height
-        :type cursor_height: :class:`int`
-        :param size_header_element: font height of regular menu options
-        :type size_header_element: :class:`int`
+    :param header: strings of localization and key header
+    :type header: :class:`Tuple`
+    :param menu_options: dictionary of menu options with localization
+    :type menu_options: :class:`dict`
+    :param keys: list of options, which are displyed on screen
+    :type keys: :class:`list`
+    :param font_height_regular: font height of regular menu options
+    :type font_height_regular: :class:`int`
+    :param font_height_header: font height of menu header
+    :type font_height_header: :class:`int`
+    :param state:  num of currently chosed options
+    :type state: :class:`int`
+    :param cursor_height: curor height
+    :type cursor_height: :class:`int`
+    :param size_header_element: font height of regular menu options
+    :type size_header_element: :class:`int`
     """
+
     def __init__(self, game):
         """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
@@ -356,7 +359,7 @@ class CreditsMenu(Menu):
             self.run_display = False
 
     def update_translation(self):
-        """Method for changing transaltion on fly"""
+        """Change transaltion on fly."""
         self.header = _("Credits"), "Credits"
         self.menu_options = {
             "Maked by Sasha and Petya": _("Maked by Sasha and Petya")

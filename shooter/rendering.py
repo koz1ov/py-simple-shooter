@@ -16,12 +16,12 @@ def _scale_sprite(sprite, size_on_screen):
 class Rendering:
     """The class that controls the rendering of the image on the screen.
 
-        :param _sc: the screen object
-        :type _sc: :class:`pygame.Surface`
-        :param _clock: clock from game class
-        :type _clock: :class:`pygame.time.Clock`
-        :param _z_buffer: what is it
-        :type _z_buffer: :class:`list`
+    :param _sc: the screen object
+    :type _sc: :class:`pygame.Surface`
+    :param _clock: clock from game class
+    :type _clock: :class:`pygame.time.Clock`
+    :param _z_buffer: list of distances to the walls
+    :type _z_buffer: :class:`list`
     """
 
     def __init__(self, game: 'Game'):  # noqa: F821

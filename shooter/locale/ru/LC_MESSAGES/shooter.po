@@ -77,3 +77,9 @@ msgstr "Случайно"
 msgid "Maked by Sasha and Petya"
 msgstr "Сделано Сашей и Петей"
 
+msgid "Score"
+msgstr "Cчет"
+
+msgid "Final score"
+msgstr "Твой счет"
+

@@ -1,3 +1,5 @@
+"""Define some menu classes."""
+
 import pygame as pg
 import gettext
 import os
@@ -11,12 +13,28 @@ _ = ru.gettext
 
 
 class Menu():
-    def __init__(self, game):
+    """Base class, which inhereted by others menu classes.
+
+    :param game: :class:`shooter.game.Game`
+    :type game: :class:`shooter.game.Game`
+    :param mid_w: middle of width
+    :type min_w: :class:`int`
+    :param mid_h: middle of height
+    :type mid_h: :class:`int`
+    :param run_display: indicator of running current menu for menu loop
+    :type run_display: :class:`Bool`
+    :param cursor_height: height of cursor rectangle
+    :type cursor_height: :class:`int`
+    :param cursor_rect: cursor rectangle
+    :type cursor_rect: :class:`pygame.Rect`
+    """
+
+    def __init__(self, game: 'Game'):  # noqa: F821
+        """Initialize all parameters with setting translation function."""
         self.game = game
         self.mid_w, self. mid_h = (self.game.DISPLAY_W / 2,
                                    self.game.DISPLAY_H / 2)
         self.run_display = True
-        self.offset = -100
         self.cursor_height = 15
         self.cursor_rect = pg.Rect(
             0, 0, self.cursor_height, self.cursor_height)
@@ -27,17 +45,40 @@ class Menu():
             _ = en.gettext
 
     def draw_cursor(self):
+        """Draw cursor using draw text."""
         self.game.draw_text(
             '*', self.cursor_height, self.cursor_rect.x, self.cursor_rect.y)
 
     def blit_screen(self):
+        """Reset display for redrawing."""
         self.game.window.blit(self.game.display, (0, 0))
         pg.display.update()
         self.game.reset_keys()
 
 
 class MainMenu(Menu):
+    """Main menu of all menu pypline.
+
+    :param header: strings of localization and key header
+    :type header: :class:`Tuple`
+    :param menu_options: dictionary of menu options with localization
+    :type menu_options: :class:`dict`
+    :param keys: list of options, which are displyed on screen
+    :type keys: :class:`list`
+    :param font_height_regular: font height of regular menu options
+    :type font_height_regular: :class:`int`
+    :param font_height_header: font height of menu header
+    :type font_height_header: :class:`int`
+    :param state:  num of currently chosed options
+    :type state: :class:`int`
+    :param cursor_height: curor height
+    :type cursor_height: :class:`int`
+    :param size_header_element: font height of regular menu options
+    :type size_header_element: :class:`int`
+    """
+
     def __init__(self, game):
+        """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
         self.header = _("Menu"), "Menu"
         self.menu_options = {
@@ -52,9 +93,10 @@ class MainMenu(Menu):
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
         self.cursor_rect.midtop = (
-            self.mid_w // 2, self.mid_h + self.size_header_element)
+            self.mid_w // 4, self.mid_h + self.size_header_element)
 
     def display_menu(self):
+        """Start menu loop with all pypeline."""
         self.run_display = True
         while self.run_display:
             self.game.check_events()
@@ -74,21 +116,23 @@ class MainMenu(Menu):
             self.blit_screen()
 
     def move_cursor(self):
+        """Handle pressed keys."""
         if self.game.DOWN_KEY:
             self.state += 1
             self.state = self.state % len(self.keys)
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
         elif self.game.UP_KEY:
             self.state = ((len(self.keys) - 1)
                           if self.state == 0
                           else (self.state - 1))
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
 
     def check_input(self):
+        """Check state and goes to another submenu."""
         self.move_cursor()
         if self.game.START_KEY:
             if self.keys[self.state] == "Start":
@@ -102,7 +146,7 @@ class MainMenu(Menu):
             self.run_display = False
 
     def update_translation(self):
-        """Method for changing transaltion on fly"""
+        """Change transaltion on fly."""
         self.header = _("Main Menu"), "Main Menu"
         self.menu_options = {
             "Start": _("Start Game"),
@@ -112,7 +156,30 @@ class MainMenu(Menu):
 
 
 class OptionsMenu(Menu):
+    """Options menu of all menu pypline.
+
+    :param header: strings of localization and key header
+    :type header: :class:`Tuple`
+    :param options_options: dictionary of menu options with localization
+    :type options_options: :class:`dict`
+    :param options_values: dictionary of values of menu options
+    :type options_values: :class:`dict`
+    :param keys: list of options, which are displyed on screen
+    :type keys: :class:`list`
+    :param font_height_regular: font height of regular menu options
+    :type font_height_regular: :class:`int`
+    :param font_height_header: font height of menu header
+    :type font_height_header: :class:`int`
+    :param state:  num of currently chosed options
+    :type state: :class:`int`
+    :param cursor_height: curor height
+    :type cursor_height: :class:`int`
+    :param size_header_element: font height of regular menu options
+    :type size_header_element: :class:`int`
+    """
+
     def __init__(self, game):
+        """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
         self.header = _("Options"), "Options"
         self.options_options = {
@@ -132,10 +199,11 @@ class OptionsMenu(Menu):
         self.state = 0
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
-        self.cursor_rect.midtop = (self.mid_w // 2,
+        self.cursor_rect.midtop = (self.mid_w // 4,
                                    self.mid_h + self.size_header_element)
 
     def display_menu(self):
+        """Options menu loop with all pypeline."""
         self.run_display = True
         while self.run_display:
             self.game.check_events()
@@ -159,21 +227,23 @@ class OptionsMenu(Menu):
             self.blit_screen()
 
     def move_cursor(self):
+        """Handle pressed keys."""
         if self.game.DOWN_KEY:
             self.state += 1
             self.state = self.state % len(self.keys)
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
         elif self.game.UP_KEY:
             self.state = ((len(self.keys) - 1)
                           if self.state == 0
                           else (self.state - 1))
-            self.cursor_rect.midtop = (self.mid_w // 2,
+            self.cursor_rect.midtop = (self.mid_w // 4,
                                        self.mid_h + self.size_header_element +
                                        self.state * self.font_height_regular)
 
     def check_input(self):
+        """Check state and change options values."""
         self.move_cursor()
         if self.game.BACK_KEY:
             self.game.current_menu = self.game.main_menu
@@ -203,7 +273,7 @@ class OptionsMenu(Menu):
         self.game.update_settings()
 
     def update_translation(self, language):
-        """Method for changing transaltion on fly"""
+        """Change transaltion on fly."""
         global _
         if language == "en":
             _ = en.gettext
@@ -228,7 +298,28 @@ class OptionsMenu(Menu):
 
 
 class CreditsMenu(Menu):
+    """Credits menu of all menu pypline.
+
+    :param header: strings of localization and key header
+    :type header: :class:`Tuple`
+    :param menu_options: dictionary of menu options with localization
+    :type menu_options: :class:`dict`
+    :param keys: list of options, which are displyed on screen
+    :type keys: :class:`list`
+    :param font_height_regular: font height of regular menu options
+    :type font_height_regular: :class:`int`
+    :param font_height_header: font height of menu header
+    :type font_height_header: :class:`int`
+    :param state:  num of currently chosed options
+    :type state: :class:`int`
+    :param cursor_height: curor height
+    :type cursor_height: :class:`int`
+    :param size_header_element: font height of regular menu options
+    :type size_header_element: :class:`int`
+    """
+
     def __init__(self, game):
+        """Initialize default menu parameters with localizations."""
         Menu.__init__(self, game)
         self.header = _("Credits"), "Credits"
         self.menu_options = {
@@ -240,10 +331,11 @@ class CreditsMenu(Menu):
         self.state = 0
         self.cursor_height = self.font_height_regular
         self.size_header_element = self.font_height_regular
-        self.cursor_rect.midtop = (self.mid_w // 2,
+        self.cursor_rect.midtop = (self.mid_w // 4,
                                    self.mid_h + self.size_header_element)
 
     def display_menu(self):
+        """Credits menu loop with all pypeline."""
         self.run_display = True
         while self.run_display:
             self.game.check_events()
@@ -263,12 +355,13 @@ class CreditsMenu(Menu):
             self.blit_screen()
 
     def check_input(self):
+        """Handle back key."""
         if self.game.BACK_KEY:
             self.game.current_menu = self.game.main_menu
             self.run_display = False
 
     def update_translation(self):
-        """Method for changing transaltion on fly"""
+        """Change transaltion on fly."""
         self.header = _("Credits"), "Credits"
         self.menu_options = {
             "Maked by Sasha and Petya": _("Maked by Sasha and Petya")

@@ -1,3 +1,4 @@
+"""Automatization of work pypeline."""
 import glob
 from doit.tools import create_folder
 from functools import partial
@@ -86,9 +87,22 @@ def task_wheel():
     clean_build = partial(shutil.rmtree, 'build', ignore_errors=True)
     clean_egg = partial(shutil.rmtree, 'shooter.egg-info', ignore_errors=True)
     return {
-        "actions": ['python3 -m build '],
+        "actions": ['python3 -m build'],
         "verbosity": 2,
         "task_dep": ['compile'],
         "targets": glob.glob("dist/*.whl") if glob.glob("dist/*.whl") else ['.whl'],
         "clean": [clean_targets, clean_build, clean_egg],
+    }
+
+
+def task_html_documentation():
+    """Generate html documentation using sphinx."""
+    build_dir = 'docs/_build'
+    clean_build = partial(shutil.rmtree, build_dir, ignore_errors=True)
+    return {
+        "actions": ['sphinx-build docs %(targets)s'],
+        "file_dep": glob.glob("**/*.py", recursive=True) + glob.glob("**/*.rst", recursive=True),
+        "task_dep": ["compile"],
+        "targets": [build_dir],
+        "clean": [clean_build],
     }

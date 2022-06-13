@@ -2,6 +2,7 @@
 from . import config as cfg
 import pygame as pg
 from . import player
+from . import sprites
 
 
 class Interaction:
@@ -11,7 +12,7 @@ class Interaction:
         """Initialise the clock object for time tracking."""
         self._clock = game.clock
 
-    def handle_events(self, player: player.Player) -> bool:
+    def handle_events(self, player: player.Player, visible_sprites: list[sprites.Sprite]) -> bool:
         """Process keyboard events and change the world state."""
         elapsed = self._clock.tick(cfg.MAX_FPS)
 
@@ -26,7 +27,11 @@ class Interaction:
             player.rotate(elapsed * cfg.ROTATE_SPEED)
         if keys[pg.K_ESCAPE]:
             return False
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
-                exit()
+        for sprite in visible_sprites:
+            rel_pos = player.pos - sprite.pos
+            if rel_pos.length() < 1:
+                continue
+            sprite.pos += rel_pos.normalize() * cfg.SPRITE_MOVE_SPEED * elapsed
+        if pg.event.peek(pg.QUIT):
+            exit(0)
         return True

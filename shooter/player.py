@@ -3,6 +3,7 @@
 import pygame as pg
 from . import config as cfg
 import math
+import itertools
 
 
 class Player:
@@ -36,6 +37,13 @@ class Player:
         return self._dir
 
     @property
+    def rect(self) -> pg.Rect:
+        """Return the rectangle of the player."""
+        return pg.Rect(cfg.SCALE_TO_COLLIDE_DETECTION * self._pos.x - cfg.PLAYER_SIZE / 2,
+                       cfg.SCALE_TO_COLLIDE_DETECTION * self._pos.y - cfg.PLAYER_SIZE / 2,
+                       cfg.PLAYER_SIZE, cfg.PLAYER_SIZE)
+
+    @property
     def plane(self) -> pg.math.Vector2:
         """Return the plane vector of the player."""
         return self._plane
@@ -46,5 +54,33 @@ class Player:
         self._plane.rotate_ip(degrees)
 
     def move(self, distance: float) -> None:
-        """Move the player in his direction."""
+        """Move the player in his direction and check collisions."""
+        old_pos = self._pos.copy()
+
+        move = distance * self._dir
         self._pos += distance * self._dir
+        map_x, map_y = int(self._pos.x), int(self._pos.y)
+        deltas = itertools.product((0, -1, 1), (0, -1, 1))
+        wall_rects = []
+        for delta in deltas:
+            wall_idxs = map_x + delta[0], map_y + delta[1]
+            try:
+                wall = cfg.MAP[wall_idxs[1]][wall_idxs[0]]
+            except IndexError:
+                self._pos = old_pos
+                return
+
+            wall_rect = tuple(i * cfg.SCALE_TO_COLLIDE_DETECTION
+                              for i in (wall_idxs[0], wall_idxs[1], 1, 1))
+            if wall and self.rect.colliderect(wall_rect):
+                wall_rects.append(wall_rect)
+                clip = self.rect.clip(wall_rect)
+                if clip.width > clip.height:
+                    move.y = 0
+                elif clip.width < clip.height:
+                    move.x = 0
+
+        self._pos = old_pos + move
+        for wall_rect in wall_rects:
+            if self.rect.colliderect(wall_rect):
+                self._pos = old_pos

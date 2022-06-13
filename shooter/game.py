@@ -38,8 +38,8 @@ class Game():
         self.clock = pygame.time.Clock()
         self.player = player.Player()
         self.sprites = sprites.Sprites()
-        self.rendering = rendering.Rendering()
-        self.interaction = interaction.Interaction()
+        self.rendering = rendering.Rendering(self)
+        self.interaction = interaction.Interaction(self)
 
     def save_game(self):
         vol = self.options.options_values["Volume"][0]

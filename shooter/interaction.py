@@ -7,9 +7,9 @@ from . import player
 class Interaction:
     """Class that processes the events and changes the world state."""
 
-    def __init__(self):
+    def __init__(self, game: 'Game'):  # noqa: F821
         """Initialise the clock object for time tracking."""
-        self._clock = pg.time.Clock()
+        self._clock = game.clock
 
     def handle_events(self, player: player.Player) -> bool:
         """Process keyboard events and change the world state."""

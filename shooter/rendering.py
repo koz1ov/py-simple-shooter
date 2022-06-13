@@ -23,9 +23,9 @@ class Rendering:
 
     def __init__(self, game: 'Game'):  # noqa: F821
         """Init the display and load textures."""
-        self._sc = pg.display.set_mode((cfg.WIDTH, cfg.HEIGHT))
+        self._game = game
+        self._sc = game.window
         self._load_textures()
-        self._clock = game.clock
         self._z_buffer = [None] * cfg.WIDTH
 
     def render(self, player: player.Player, sprites_list) -> list[sprites.Sprite]:
@@ -36,6 +36,7 @@ class Rendering:
         self._draw_minimap(player.pos)
         self._debug_fps()
         self._render_weapon()
+        self._render_score()
         pg.display.flip()
         return visible_sprites
         # TODO: render floor and ceiling
@@ -174,6 +175,11 @@ class Rendering:
         weapon_pos = (cfg.WIDTH // 2 - tex_weapon.get_width() // 2 + cfg.WIDTH * 0.1,
                       cfg.HEIGHT - tex_weapon.get_height())
         self._sc.blit(tex_weapon, weapon_pos)
+
+    def _render_score(self):
+        """Render score."""
+        self._game.draw_text(f"Score: {self._game.score}", cfg.HEIGHT // 20,
+                             cfg.WIDTH // 10, cfg.HEIGHT // 10, display=self._sc)
 
     def _debug_fps(self):
         pass

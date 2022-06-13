@@ -58,8 +58,8 @@ class Game():
             except ValidationError as e:
                 print(e.json())
             while self.playing:
-                self.playing = self.interaction.handle_events(self.player)
-                self.rendering.render(self.player, self.sprites.sprites)
+                visible_sprites = self.rendering.render(self.player, self.sprites.sprites)
+                self.playing = self.interaction.handle_events(self.player, visible_sprites)
 
     def check_events(self):
         for event in pygame.event.get():

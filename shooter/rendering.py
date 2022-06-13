@@ -28,14 +28,15 @@ class Rendering:
         self._clock = game.clock
         self._z_buffer = [None] * cfg.WIDTH
 
-    def render(self, player: player.Player, sprites_list):
+    def render(self, player: player.Player, sprites_list) -> list[sprites.Sprite]:
         """Render an image on the screen."""
         self._sc.fill((255, 0, 0))
         self._render_walls(player.pos, player.dir, player.plane)
-        self._render_sprites(player.pos, player.dir, player.plane, sprites_list)
+        visible_sprites = self._render_sprites(player.pos, player.dir, player.plane, sprites_list)
         self._draw_minimap(player.pos)
         self._debug_fps()
         pg.display.flip()
+        return visible_sprites
         # TODO: render floor and ceiling
 
     def _draw_minimap(self, player_pos: pg.math.Vector2):
@@ -124,10 +125,12 @@ class Rendering:
             self._z_buffer[x: x + cfg.WALL_RENDER_SCALE] = [dist] * cfg.WALL_RENDER_SCALE
 
     def _render_sprites(self, player_pos: pg.math.Vector2, player_dir: pg.math.Vector2,
-                        plane_vec: pg.math.Vector2, sprites_list: list[sprites.Sprite]):
-        """Render sprites."""
+                        plane_vec: pg.math.Vector2, sprites_list: list[sprites.Sprite]) \
+            -> list[sprites.Sprite]:
+        """Render sprites and return the list of sprites visitble to the player."""
         sprites_list.sort(key=lambda sprite: (sprite.pos - player_pos).length_squared(),
                           reverse=True)
+        visible_sprites = []
         for sprite in sprites_list:
             rel_pos = sprite.pos - player_pos
             inv_det = 1 / (plane_vec.x * player_dir.y - player_dir.x * plane_vec.y)
@@ -150,11 +153,13 @@ class Rendering:
             if not xs:
                 continue
 
+            visible_sprites.append(sprite)
             start = xs[0] - (screen_x - size_on_screen // 2)
             scaled = _scale_sprite(sprite.texture, size_on_screen)
-            if True:
-                self._sc.blit(scaled, (xs[0], cfg.HEIGHT // 2 - size_on_screen // 2),
-                              area=(start, 0, xs[-1] - xs[0], size_on_screen))
+            self._sc.blit(scaled, (xs[0], cfg.HEIGHT // 2 - size_on_screen // 2),
+                          area=(start, 0, xs[-1] - xs[0], size_on_screen))
+
+        return visible_sprites
 
     def _debug_fps(self):
         pass

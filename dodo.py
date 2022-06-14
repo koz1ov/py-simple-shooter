@@ -3,9 +3,10 @@ import glob
 from doit.tools import create_folder
 from functools import partial
 import shutil
+import os
 from doit.task import clean_targets
 
-DOIT_CONFIG = {'default_tasks': ['compile']}
+DOIT_CONFIG = {'default_tasks': ['compile', 'wheel']}
 
 
 def task_extract() -> dict:
@@ -84,21 +85,33 @@ def task_check_docstyle():
 
 def task_wheel():
     """Create wheel distribution."""
-    clean_build = partial(shutil.rmtree, 'build', ignore_errors=True)
     clean_egg = partial(shutil.rmtree, 'shooter.egg-info', ignore_errors=True)
+    clean = partial(shutil.rmtree, 'dist', ignore_errors=True)
     return {
-        "actions": ['python3 -m build'],
+        "actions": ['python3 -m build -w'],
         "verbosity": 2,
         "task_dep": ['compile'],
-        "targets": glob.glob("dist/*.whl") if glob.glob("dist/*.whl") else ['.whl'],
-        "clean": [clean_targets, clean_build, clean_egg],
+        "targets": glob.glob("dist/*.whl") + glob.glob("*.egg-info") if glob.glob("dist/*.whl") else ['.whl'],
+        "clean": [clean_egg, clean, clean_targets],
+    }
+
+def task_source():
+    """Create source distribution."""
+    clean = partial(shutil.rmtree, 'dist', ignore_errors=True)
+    clean_build = partial(shutil.rmtree, 'build', ignore_errors=True)
+    return {
+        "actions": ['python3 -m build -s'],
+        "verbosity": 2,
+        "task_dep": ['compile'],
+        "targets": glob.glob("dist/*.tar.gz") if glob.glob("dist/*.tar.gz") else ['.tar.gz'],
+        "clean": [clean, clean_build],
     }
 
 
 def task_html_documentation():
     """Generate html documentation using sphinx."""
     build_dir = 'docs/_build'
-    clean_build = partial(shutil.rmtree, build_dir, ignore_errors=True)
+    clean_build = partial(shutil.rmtree, build_dir, ignore_errors=False)
     return {
         "actions": ['sphinx-build docs %(targets)s'],
         "file_dep": glob.glob("**/*.py", recursive=True) + glob.glob("**/*.rst", recursive=True),

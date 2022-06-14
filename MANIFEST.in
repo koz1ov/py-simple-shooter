@@ -1,5 +1,5 @@
 include dodo.py 
 include requirements.txt requirements-dev.txt
 include docs/* docs/_static/* 
-include test/__init__.py test/data/*
-include locales/* locales/*/*/*
+include shooter/locale/*/*/*
+include .flake8

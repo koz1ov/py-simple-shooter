@@ -8,8 +8,7 @@ Welcome to py-simple-shooter's documentation!
 
 This module is a simple 2.5D game inspired by the first versions of Doom
 
-.. image:: _static/game.png
-
+.. image:: _static/game.gif
 
 .. toctree::
    :maxdepth: 2

@@ -9,7 +9,6 @@ from . import interaction
 from . import player
 from . import rendering
 from . import config
-import os
 
 
 class Game():
@@ -189,7 +188,6 @@ class Game():
         self.UP_KEY, self.DOWN_KEY, self.START_KEY = False, False, False
         self.BACK_KEY, self.LEFT_KEY, self.RIGHT_KEY = False, False, False
         self.ESC_KEY = False
-
 
     def draw_text(self, text, size, x, y, display=None):
         """Draw text onto surface."""

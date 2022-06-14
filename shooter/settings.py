@@ -6,7 +6,7 @@ path_to_menu = os.path.dirname(__file__)
 
 class SettingsData(BaseModel):
     """Base class for serializations json data from settings-json-file."""
-    
+
     volume: int = Field(alias="volume")
     music: int = Field(alias="music")
     language: int = Field(alias="language")

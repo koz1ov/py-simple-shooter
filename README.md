@@ -11,6 +11,12 @@ Numpy или что-то другое для математики
 
 ![Screenshot from 2022-03-22 22-40-02](https://user-images.githubusercontent.com/30055878/159562402-d8b10714-677a-4200-b7e1-9ca9becfe703.png)
 
+### Туториал
+Шутер часть:
+https://lodev.org/cgtutor/raycasting.html#Introduction
+Меню часть:
+https://www.youtube.com/watch?v=a5JWrd7Y_14&t=970s&ab_channel=CDcodes
+
 ### Правила игры
 Задача игрока за ограниченное время уничтожить наибольшее количество противников. В конце игры появляется счет с количеством пораженных противников.
 

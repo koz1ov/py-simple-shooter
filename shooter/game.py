@@ -9,6 +9,7 @@ from . import interaction
 from . import player
 from . import rendering
 from . import config
+global _
 
 
 class Game():
@@ -137,9 +138,11 @@ class Game():
         """Show the final result of the game."""
         while True:
             self.window.fill(self.GRAY)
+            final_score_tr = _("Final score")
             self.draw_text(
-                f'Your score is {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
-                config.HEIGHT // 2 - config.HEIGHT // 10, display=self.window)
+                f'{final_score_tr} {self.score}', config.HEIGHT // 10, config.WIDTH // 2,
+                config.HEIGHT // 2 - config.HEIGHT // 10,
+                display=self.window)
             pygame.display.flip()
             if pygame.event.peek(pygame.QUIT):
                 return

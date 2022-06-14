@@ -1,15 +1,8 @@
 """Define some menu classes."""
 
 import pygame as pg
-import gettext
-import os
-
-path_to_locale = os.path.dirname(__file__) + "/../locale/"
-en = gettext.translation("shooter", path_to_locale, languages=["en"])
-ru = gettext.translation("shooter", path_to_locale, languages=["ru"])
-ru.install()
-en.install()
-_ = ru.gettext
+from .. import translation as tr
+global _
 
 
 class Menu():
@@ -38,11 +31,10 @@ class Menu():
         self.cursor_height = 15
         self.cursor_rect = pg.Rect(
             0, 0, self.cursor_height, self.cursor_height)
-        global _
         if self.game.settings.data.language == 0:
-            _ = ru.gettext
+            tr.ru.install()
         else:
-            _ = en.gettext
+            tr.en.install()
 
     def draw_cursor(self):
         """Draw cursor using draw text."""
@@ -147,6 +139,8 @@ class MainMenu(Menu):
 
     def update_translation(self):
         """Change transaltion on fly."""
+        self.header = _("Main Menu"), "Main Menu"
+        """Method for changing transaltion on fly"""
         self.header = _("Main Menu"), "Main Menu"
         self.menu_options = {
             "Start": _("Start Game"),
@@ -274,11 +268,10 @@ class OptionsMenu(Menu):
 
     def update_translation(self, language):
         """Change transaltion on fly."""
-        global _
         if language == "en":
-            _ = en.gettext
+            tr.en.install()
         elif language == "ru":
-            _ = ru.gettext
+            tr.ru.install()
         self.header = _("Options"), "Options"
         self.options_options = {
             "Volume": _("Volume"),
@@ -361,7 +354,7 @@ class CreditsMenu(Menu):
             self.run_display = False
 
     def update_translation(self):
-        """Change transaltion on fly."""
+        """Method for changing transaltion on fly"""
         self.header = _("Credits"), "Credits"
         self.menu_options = {
             "Maked by Sasha and Petya": _("Maked by Sasha and Petya")

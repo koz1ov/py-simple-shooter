@@ -6,6 +6,7 @@ import os
 from . import config as cfg
 from . import player
 from . import sprites
+global _
 
 
 @functools.lru_cache(maxsize=100)
@@ -68,14 +69,14 @@ class Rendering:
         """Load the texture images from files and save its dimensions."""
         path_to_pics = os.path.dirname(__file__)
         self._textures = {
-            1: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            2: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            3: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            4: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            5: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            6: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            7: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
-            8: pg.image.load(path_to_pics + '/pics/wood.png').convert(),
+            1: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            2: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            3: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            4: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            5: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            6: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            7: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
+            8: pg.image.load(path_to_pics + '/pics/wall.png').convert(),
             'weapon': pg.image.load(path_to_pics + '/pics/weapon.png').convert_alpha(),
         }
         self._textures['weapon'] = pg.transform.scale(self._textures['weapon'],
@@ -182,7 +183,8 @@ class Rendering:
 
     def _render_score(self):
         """Render score."""
-        self._game.draw_text(f"Score: {self._game.score}", cfg.HEIGHT // 20,
+        score_tr = _('Score')
+        self._game.draw_text(f"{score_tr}: {self._game.score}", cfg.HEIGHT // 20,
                              cfg.WIDTH // 10, cfg.HEIGHT // 10, display=self._sc)
 
     def _render_time_left(self):
@@ -193,4 +195,4 @@ class Rendering:
 
     def _debug_fps(self):
         pass
-        # print(self._clock.get_fps())
+        # print(self._game.clock.get_fps())

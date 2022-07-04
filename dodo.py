@@ -3,6 +3,7 @@ import glob
 from doit.tools import create_folder
 from functools import partial
 import shutil
+import os
 from doit.task import clean_targets
 
 DOIT_CONFIG = {'default_tasks': ['compile', 'wheel']}

@@ -11,6 +11,7 @@ Numpy или что-то другое для математики
 
 ![Screenshot from 2022-03-22 22-40-02](https://user-images.githubusercontent.com/30055878/159562402-d8b10714-677a-4200-b7e1-9ca9becfe703.png)
 
+
 ### Туториал
 Шутер часть:
 https://lodev.org/cgtutor/raycasting.html#Introduction
@@ -68,3 +69,4 @@ python3 -m shooter
 ```bash
 shooter
 ```
+
